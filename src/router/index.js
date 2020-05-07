@@ -1,15 +1,20 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import firebase from '@/firebaseinit.js'
+import firebase from "@/firebaseinit";
 
 Vue.use(VueRouter)
 
-  const routes = [
+const routes = [
   {
     path: '/',
+    redirect: '/zzz'
+  },
+  {
+    path: '/:id',
     component: function () {
       return import('../views/Home.vue')
     },
+    props: true
   }
 ]
 

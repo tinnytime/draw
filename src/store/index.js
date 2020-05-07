@@ -1,9 +1,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
+
 Vue.use(Vuex);
+
 export default new Vuex.Store({
   state: {
     user: {
+      data: null
+    },
+    drawing: {
       data: null
     }
   },
@@ -14,18 +19,18 @@ export default new Vuex.Store({
   },
   mutations: {
     SET_USER(state, data) {
-      state.user.data = data;
+      state.user.data = data
+    },
+    SET_DRAWING(state, data) {
+      state.drawing.data = data
     }
   },
   actions: {
     fetchUser({ commit }, user) {
-      if (user) {
-        commit("SET_USER", {
-          id: user.id
-        });
-      } else {
-        commit("SET_USER", null);
-      }
+      commit('SET_USER', {id: user.id})
+    },
+    fetchDrawing({ commit }, drawing) {
+      commit('SET_DRAWING', {lines: drawing.lines})
     }
   }
 });

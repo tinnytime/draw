@@ -15,9 +15,17 @@
 </template>
 
 <script>
+
+import firebase from "@/firebaseinit";
+
 export default {
   name: "board",
+  props: {
+    id: String,
+    userId: Number
+  },
   data() {return {
+    start: false,
     title: 'Untitled',
     canvas: null,
     ctx: null,
@@ -25,7 +33,6 @@ export default {
     userStrokeStyle: '#EE92C2',
     guestStrokeStyle: '#F0C987',
     line: [],
-    userId: Math.floor(Math.random() * 100000),
     prevPos: {offsetX: 0, offsetY: 0}
   }},
   methods: {
@@ -54,25 +61,46 @@ export default {
       this.isPainting = false
       this.sendPaintData()
     },
-    paint(prevPos, currPos, strokeStyle) {
+    paint(prevPos, currPos, colour) {
       const {offsetX, offsetY} = currPos
       const {offsetX: x, offsetY: y} = prevPos
 
       this.ctx.beginPath()
-      this.ctx.strokeStyle = strokeStyle
+      this.ctx.strokeStyle = colour
       this.ctx.moveTo(x, y)
       this.ctx.lineTo(offsetX, offsetY)
       this.ctx.stroke()
       this.prevPos = {offsetX, offsetY}
     },
-    sendPaintData() {
-      console.log('Sending paint data..')
+    async sendPaintData() {
+      console.log(this.line)
+      const body = {
+        userId: this.$props.userId,
+        line: this.line,
+        created: Date.now(),
+        colour: this.userStrokeStyle,
+      }
+      const drawingRef = firebase.database().ref('drawings/' + this.$props.id)
+      const res = await drawingRef.push(body)
+      this.line = []
     },
     saveImage() {
       let link = document.createElement('a');
       link.setAttribute('download', this.title+'.png');
       link.setAttribute('href', this.canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream'));
       link.click();
+    },
+    onSnapShot(snapshot) {
+      if (!snapshot.val()) return
+      const s = snapshot.val()
+
+      for (var key in s) {
+        const { userId, line, colour } = s[key]
+        if (userId == this.$props.userId) continue
+        line.forEach(function(segment) {
+          this.paint(segment.start, segment.stop, colour)
+        }.bind(this))
+      }
     }
   },
   mounted() {
@@ -84,6 +112,9 @@ export default {
     this.ctx.lineJoin = 'round';
     this.ctx.lineCap = 'round';
     this.ctx.lineWidth = 5;
+
+    var drawingRef = firebase.database().ref('drawings/' + this.$props.id);
+    drawingRef.on('value', this.onSnapShot)
   }
 };
 </script>
