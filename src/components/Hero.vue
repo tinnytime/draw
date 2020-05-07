@@ -5,7 +5,7 @@
         <h1 class="title">Firebase Vue.js Auth Starter</h1>
         <h2 class="subtitle">
           Vue.js & Firebase Auth includes routing & protected views.
-        </h2> 
+        </h2>
       </div>
     </div>
   </div>

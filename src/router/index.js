@@ -10,23 +10,6 @@ Vue.use(VueRouter)
     component: function () {
       return import('../views/Home.vue')
     },
-  },
-  {
-    path: '/signin',
-    name: 'signin',
-    component: function () {
-      return import('../views/SignIn.vue')
-    }
-  },
-  {
-    path: '/profile',
-    name: 'profile',
-    component: function () {
-      return import('../views/Profile.vue')
-    },
-    meta: {
-      requiresAuth: true
-    }
   }
 ]
 
@@ -36,14 +19,4 @@ const router = new VueRouter({
   routes
 })
 
-router.beforeEach(async (to, from, next) => {
-  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-  if (requiresAuth && !await firebase.getCurrentUser()) {
-    next('signin');
-  } else {
-    next();
-  }
-})
-
 export default router
- 

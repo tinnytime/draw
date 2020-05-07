@@ -1,11 +1,11 @@
 <template>
-   <Hero/>
-</template> 
+   <Board/>
+</template>
 <script>
-import Hero from '@/components/Hero';
-export default { 
+import Board from '@/components/Board';
+export default {
     components: {
-        Hero
+        Board
     }
 }
 </script>

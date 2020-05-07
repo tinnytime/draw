@@ -4,7 +4,6 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     user: {
-      loggedIn: false,
       data: null
     }
   },
@@ -14,19 +13,15 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    SET_LOGGED_IN(state, value) {
-      state.user.loggedIn = value;
-    },
     SET_USER(state, data) {
       state.user.data = data;
     }
   },
   actions: {
     fetchUser({ commit }, user) {
-      commit("SET_LOGGED_IN", user !== null);
       if (user) {
         commit("SET_USER", {
-          email: user.email
+          id: user.id
         });
       } else {
         commit("SET_USER", null);
