@@ -59,7 +59,10 @@ export default {
       if (!this.isPainting) return
 
       this.isPainting = false
-      this.sendPaintData()
+
+      if (this.line.length > 0) {
+        this.sendPaintData()
+      }
     },
     paint(prevPos, currPos, colour) {
       const {offsetX, offsetY} = currPos
@@ -73,7 +76,6 @@ export default {
       this.prevPos = {offsetX, offsetY}
     },
     async sendPaintData() {
-      console.log(this.line)
       const body = {
         userId: this.$props.userId,
         line: this.line,
@@ -95,7 +97,7 @@ export default {
       const s = snapshot.val()
 
       for (var key in s) {
-        const { userId, line, colour } = s[key]
+        const { userId, line = [], colour } = s[key]
         if (userId == this.$props.userId) continue
         line.forEach(function(segment) {
           this.paint(segment.start, segment.stop, colour)
