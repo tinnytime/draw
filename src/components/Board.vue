@@ -3,10 +3,11 @@
     <div class="columns">
       <div class="column is-one-fifth">
         <button @click="saveImage()">Save</button>
+        <button @click="addRect()">Add rectangle</button>
       </div>
       <div class="column">
         <div class="hero-body">
-          <canvas style="background: white" ref="board" @mousedown="mouseDown($event)" @mouseup="endPaint"
+          <canvas ref="board" @mousedown="mouseDown($event)" @mouseup="endPaint"
           @mousemove="mouseMove($event)" @mouseleave="endPaint" />
         </div>
       </div>
@@ -17,11 +18,12 @@
 <script>
 
 import firebase from "@/firebaseinit";
+import { fabric } from '@/fabric'
 
 export default {
   name: "board",
   props: {
-    id: String,
+    refId: String,
     userId: Number
   },
   data() {return {
@@ -33,6 +35,7 @@ export default {
     userStrokeStyle: '#EE92C2',
     guestStrokeStyle: '#F0C987',
     line: [],
+    elements: [],
     prevPos: {offsetX: 0, offsetY: 0}
   }},
   methods: {
@@ -93,30 +96,69 @@ export default {
       link.click();
     },
     onSnapShot(snapshot) {
-      if (!snapshot.val()) return
       const s = snapshot.val()
 
-      for (var key in s) {
-        const { userId, line = [], colour } = s[key]
-        if (userId == this.$props.userId) continue
-        line.forEach(function(segment) {
-          this.paint(segment.start, segment.stop, colour)
-        }.bind(this))
+      if (!s) return
+
+      for (var objectId in s) {
+        var { data, uid } = s[objectId]
+
+        // Use array diff instead?
+        if (this.elements.indexOf(objectId) > -1) continue
+        if (uid == this.$props.userId) continue
+
+        const el = this.loadElement(data.type, data)
+
+        if (!el) continue
+
+        this.canvas.add(el)
+        this.elements.push(objectId)
       }
+    },
+    loadElement(type, data) {
+      var el = null
+      switch(type) {
+        case 'rect':
+          el = new fabric.Rect(data)
+          break;
+      }
+
+      return el
+    },
+    addRect() {
+      const id = firebase.database().ref(this.$props.refId).push().key;
+      const params = {
+        fill: 'red',
+        height: 40,
+        width: 40,
+      }
+      const rect = new fabric.Rect(params)
+      const data = {
+        uid: this.$props.userId,
+        created: Date.now(),
+        data: rect.toJSON()
+      }
+
+      this.elements.push(id)
+      this.canvas.add(rect)
+      firebase.database().ref(this.$props.refId + '/' + id).update(data);
+    },
+    onFabricElementAdded(options) {
+
     }
   },
   mounted() {
-    this.canvas = this.$refs.board;
-    this.canvas.height = window.innerHeight * 0.7;
-    this.canvas.width = window.innerWidth * 0.7;
+    const canvasRef = this.$refs.board;
 
-    this.ctx = this.canvas.getContext("2d");
-    this.ctx.lineJoin = 'round';
-    this.ctx.lineCap = 'round';
-    this.ctx.lineWidth = 5;
+    this.canvas = new fabric.Canvas(canvasRef, {
+        height: 500,
+        width: 800,
+        backgroundColor: 'white'
+    });
 
-    var drawingRef = firebase.database().ref('drawings/' + this.$props.id);
-    drawingRef.on('value', this.onSnapShot)
+    this.canvas.on('object:added', this.onFabricElementAdded)
+
+    firebase.database().ref(this.$props.refId).on('value', this.onSnapShot)
   }
 };
 </script>

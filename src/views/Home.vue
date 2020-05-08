@@ -1,5 +1,5 @@
 <template>
-  <Board :id="id" :userId="userId()"/>
+  <Board :refId=refId :userId="userId()"/>
 </template>
 
 <script>
@@ -12,6 +12,11 @@ export default {
   methods: {
     userId() {
       return Math.floor(Math.random() * 100000) + 100000
+    }
+  },
+  computed: {
+    refId() {
+      return 'drawings/' + this.$props.id
     }
   },
   components: {
