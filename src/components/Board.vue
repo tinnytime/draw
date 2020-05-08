@@ -7,8 +7,7 @@
       </div>
       <div class="column">
         <div class="hero-body">
-          <canvas ref="board" @mousedown="mouseDown($event)" @mouseup="endPaint"
-          @mousemove="mouseMove($event)" @mouseleave="endPaint" />
+          <canvas ref="board" />
         </div>
       </div>
     </div>
@@ -27,68 +26,11 @@ export default {
     userId: Number
   },
   data() {return {
-    start: false,
     title: 'Untitled',
     canvas: null,
-    ctx: null,
-    isPainting: false,
-    userStrokeStyle: '#EE92C2',
-    guestStrokeStyle: '#F0C987',
-    line: [],
     elements: [],
-    prevPos: {offsetX: 0, offsetY: 0}
   }},
   methods: {
-    mouseDown(event) {
-      const {offsetX, offsetY } = event
-
-      this.isPainting = true
-      this.prevPos = {offsetX, offsetY}
-    },
-    mouseMove(event) {
-      if (!this.isPainting) return
-
-      const {offsetX, offsetY} = event
-      const offSetData = {offsetX, offsetY}
-      const positionData = {
-        start: {...this.prevPos},
-        stop: {...offSetData},
-      }
-
-      this.line = this.line.concat(positionData)
-      this.paint(this.prevPos, offSetData, this.userStrokeStyle)
-    },
-    endPaint() {
-      if (!this.isPainting) return
-
-      this.isPainting = false
-
-      if (this.line.length > 0) {
-        this.sendPaintData()
-      }
-    },
-    paint(prevPos, currPos, colour) {
-      const {offsetX, offsetY} = currPos
-      const {offsetX: x, offsetY: y} = prevPos
-
-      this.ctx.beginPath()
-      this.ctx.strokeStyle = colour
-      this.ctx.moveTo(x, y)
-      this.ctx.lineTo(offsetX, offsetY)
-      this.ctx.stroke()
-      this.prevPos = {offsetX, offsetY}
-    },
-    async sendPaintData() {
-      const body = {
-        userId: this.$props.userId,
-        line: this.line,
-        created: Date.now(),
-        colour: this.userStrokeStyle,
-      }
-      const drawingRef = firebase.database().ref('drawings/' + this.$props.id)
-      const res = await drawingRef.push(body)
-      this.line = []
-    },
     saveImage() {
       let link = document.createElement('a');
       link.setAttribute('download', this.title+'.png');
