@@ -20,8 +20,8 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "firebase": "^7.14.1",
-    "firebaseui": "^4.5.0",
+    "fabric": "^3.6.3",
+    "firebase": "^7.14.3",
     "vue": "^2.6.11",
     "vue-router": "^3.1.6",
     "vuex": "^3.1.3"
