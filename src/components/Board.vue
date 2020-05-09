@@ -4,6 +4,7 @@
       <div class="column is-one-fifth">
         <button @click="saveImage()">Save</button>
         <button @click="addRect()">Add rectangle</button>
+        <button @click="togglePencil()">Pencil</button>
         <button @click="deleteSelected()">Delete selected</button>
         <button @click="clearCanvas()">Clear</button>
       </div>
@@ -71,6 +72,11 @@ export default {
       }
       firebase.database().ref(this.$props.refId + '/' + id).update(data);
     },
+    togglePencil() {
+      this.canvas.isDrawingMode = !this.canvas.isDrawingMode
+      this.canvas.freeDrawingBrush.color = 'red';
+      this.canvas.freeDrawingBrush.width = parseInt(2, 10) || 1;
+    },
     clearCanvas() {
       this.canvas.remove(...this.canvas.getObjects())
     },
@@ -88,6 +94,7 @@ export default {
         height: 500,
         width: 800,
         backgroundColor: 'white',
+        isDrawingMode: false
     });
 
     this.canvas.on('selection:cleared', options => {
@@ -101,6 +108,23 @@ export default {
         }
         firebase.database().ref(this.$props.refId + '/' + el.id).update(data)
       })
+    })
+
+    this.canvas.on('object:added', options => {
+      if (!options.target) return
+      if (options.target.type !== 'path') return
+      if (options.target.hasOwnProperty('id') && options.target.id.length > 0) return
+
+      const el = options.target
+      const id = firebase.database().ref(this.$props.refId).push().key
+      el.id = id
+
+      const data = {
+        uid: this.$props.userId,
+        created: Date.now(),
+        data: el.toJSON(['id']),
+      }
+      firebase.database().ref(this.$props.refId + '/' + id).update(data);
     })
 
     this.canvas.on('object:removed', options => {
