@@ -1,12 +1,12 @@
 <template>
   <div class="hero is-info is-fullheight-with-navbar">
     <div class="columns">
-      <div class="column is-one-fifth">
-        <button @click="saveImage()">Save</button>
-        <button @click="addRect()">Add rectangle</button>
-        <button @click="togglePencil()">Pencil</button>
-        <button @click="deleteSelected()">Delete selected</button>
-        <button @click="clearCanvas()">Clear</button>
+      <div class="column is-one-fifth buttons are-small">
+        <button class="button" @click="saveImage()">Save</button>
+        <button class="button" @click="addRect()">Add rectangle</button>
+        <button :class="['button', {'is-primary is-active': isActivePencil}]" @click="togglePencil()">Pencil</button>
+        <button class="button" @click="deleteSelected()">Delete selected</button>
+        <button class="button" @click="clearCanvas()">Clear</button>
       </div>
       <div class="column">
         <div class="hero-body">
@@ -31,6 +31,7 @@ export default {
   data: () => ({
     title: 'Untitled',
     canvas: null,
+    isActivePencil: false
   }),
   methods: {
     saveImage() {
@@ -72,7 +73,8 @@ export default {
       }
       firebase.database().ref(this.$props.refId + '/' + id).update(data);
     },
-    togglePencil() {
+    togglePencil(e) {
+      this.isActivePencil = !this.isActivePencil
       this.canvas.isDrawingMode = !this.canvas.isDrawingMode
       this.canvas.freeDrawingBrush.color = 'red';
       this.canvas.freeDrawingBrush.width = parseInt(2, 10) || 1;
