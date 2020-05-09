@@ -29,7 +29,6 @@ export default {
   data: () => ({
     title: 'Untitled',
     canvas: null,
-    elements: [],
   }),
   methods: {
     saveImage() {
@@ -40,6 +39,13 @@ export default {
     },
     addElements(elements) {
       elements.forEach(e => this.canvas.add(e))
+    },
+    updateElements(elements) {
+      elements.forEach(e => {
+        const el = this.getFabricElementById(e.id)
+        el.set(e.toObject())
+      })
+      this.canvas.renderAll()
     },
     removeElements(elements) {
       elements.forEach(e => {
@@ -113,6 +119,10 @@ export default {
     firebase.database().ref(this.$props.refId).on('child_added', snapshot => {
       const { data } = snapshot.val()
       fabric.util.enlivenObjects([data], this.addElements)
+    })
+    firebase.database().ref(this.$props.refId).on('child_changed', snapshot => {
+      const { data } = snapshot.val()
+      fabric.util.enlivenObjects([data], this.updateElements)
     })
     firebase.database().ref(this.$props.refId).on('child_removed', snapshot => {
       const { data } = snapshot.val()
