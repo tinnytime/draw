@@ -77,15 +77,30 @@ export default {
     this.canvas = new fabric.Canvas(canvasRef, {
         height: 500,
         width: 800,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
     });
+
+    this.canvas.on('selection:cleared', options => {
+      if (!options.deselected.length) return
+
+      options.deselected.forEach(el => {
+        const data = {
+          uid: this.$props.userId,
+          created: Date.now(),
+          data: el.toJSON(['id', el.id]),
+        }
+        firebase.database().ref(this.$props.refId + '/' + el.id).update(data)
+      })
+    })
 
     this.canvas.on('object:removed', options => {
       if (!options.target) return
       firebase.database().ref(this.$props.refId + '/' + options.target.id).remove()
     })
+
     this.canvas.on('object:modified', options => {
       if (!options.target) return
+      if (options.target.type === 'activeSelection') return
 
       const data = {
         uid: this.$props.userId,
