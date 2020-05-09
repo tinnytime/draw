@@ -4,6 +4,7 @@
       <div class="column is-one-fifth">
         <button @click="saveImage()">Save</button>
         <button @click="addRect()">Add rectangle</button>
+        <button @click="clearCanvas()">Clear</button>
       </div>
       <div class="column">
         <div class="hero-body">
@@ -25,11 +26,11 @@ export default {
     refId: String,
     userId: Number
   },
-  data() {return {
+  data: () => ({
     title: 'Untitled',
     canvas: null,
     elements: [],
-  }},
+  }),
   methods: {
     saveImage() {
       let link = document.createElement('a');
@@ -37,56 +38,37 @@ export default {
       link.setAttribute('href', this.canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream'));
       link.click();
     },
-    onSnapShot(snapshot) {
-      const s = snapshot.val()
-
-      if (!s) return
-
-      for (var objectId in s) {
-        var { data, uid } = s[objectId]
-
-        // Use array diff instead?
-        if (this.elements.indexOf(objectId) > -1) continue
-        if (uid == this.$props.userId) continue
-
-        const el = this.loadElement(data.type, data)
-
-        if (!el) continue
-
-        this.canvas.add(el)
-        this.elements.push(objectId)
-      }
+    addElements(elements) {
+      elements.forEach(e => this.canvas.add(e))
     },
-    loadElement(type, data) {
-      var el = null
-      switch(type) {
-        case 'rect':
-          el = new fabric.Rect(data)
-          break;
-      }
-
-      return el
+    removeElements(elements) {
+      elements.forEach(e => {
+        const el = this.getFabricElementById(e.id)
+        this.canvas.remove(...[el])
+      })
     },
     addRect() {
       const id = firebase.database().ref(this.$props.refId).push().key;
-      const params = {
+      const rect = new fabric.Rect({
+        id: id,
         fill: 'red',
         height: 40,
         width: 40,
-      }
-      const rect = new fabric.Rect(params)
+        top: Math.floor(Math.random()*400),
+        left: Math.floor(Math.random()*400)
+      })
       const data = {
         uid: this.$props.userId,
         created: Date.now(),
-        data: rect.toJSON()
+        data: rect.toJSON(['id', id]),
       }
-
-      this.elements.push(id)
-      this.canvas.add(rect)
       firebase.database().ref(this.$props.refId + '/' + id).update(data);
     },
-    onFabricElementAdded(options) {
-
+    clearCanvas() {
+      this.canvas.remove(...this.canvas.getObjects());
+    },
+    getFabricElementById(id) {
+      return this.canvas.getObjects().filter((item) => { return item.id == id })[0]
     }
   },
   mounted() {
@@ -98,9 +80,19 @@ export default {
         backgroundColor: 'white'
     });
 
-    this.canvas.on('object:added', this.onFabricElementAdded)
+    this.canvas.on('object:added', function(options) {
+    })
+    this.canvas.on('object:removed', function(options) {
+    })
 
-    firebase.database().ref(this.$props.refId).on('value', this.onSnapShot)
+    firebase.database().ref(this.$props.refId).on('child_added', snapshot => {
+      const { data } = snapshot.val()
+      fabric.util.enlivenObjects([data], this.addElements)
+    })
+    firebase.database().ref(this.$props.refId).on('child_removed', snapshot => {
+      const { data } = snapshot.val()
+      fabric.util.enlivenObjects([data], this.removeElements)
+    })
   }
 };
 </script>
