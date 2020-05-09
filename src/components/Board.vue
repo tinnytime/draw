@@ -100,7 +100,7 @@ export default {
     });
 
     this.canvas.on('selection:cleared', options => {
-      if (!options.deselected.length) return
+      if (!options.hasOwnProperty('deselected')) return
 
       options.deselected.forEach(el => {
         const data = {
