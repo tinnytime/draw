@@ -80,9 +80,9 @@ export default {
         backgroundColor: 'white'
     });
 
-    this.canvas.on('object:added', function(options) {
-    })
-    this.canvas.on('object:removed', function(options) {
+    this.canvas.on('object:removed', options => {
+      if (!options.target) return
+      firebase.database().ref(this.$props.refId + '/' + options.target.id).remove()
     })
 
     firebase.database().ref(this.$props.refId).on('child_added', snapshot => {
