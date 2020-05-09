@@ -68,7 +68,7 @@ export default {
       const data = {
         uid: this.$props.userId,
         created: Date.now(),
-        data: rect.toJSON(['id', id]),
+        data: rect.toJSON(['id']),
       }
       firebase.database().ref(this.$props.refId + '/' + id).update(data);
     },
@@ -104,7 +104,7 @@ export default {
         const data = {
           uid: this.$props.userId,
           created: Date.now(),
-          data: el.toJSON(['id', el.id]),
+          data: el.toJSON(['id']),
         }
         firebase.database().ref(this.$props.refId + '/' + el.id).update(data)
       })
