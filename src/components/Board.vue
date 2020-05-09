@@ -118,6 +118,7 @@ export default {
       const el = options.target
       const id = firebase.database().ref(this.$props.refId).push().key
       el.id = id
+      el.fill = ''
 
       const data = {
         uid: this.$props.userId,
