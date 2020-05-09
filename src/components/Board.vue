@@ -4,6 +4,7 @@
       <div class="column is-one-fifth">
         <button @click="saveImage()">Save</button>
         <button @click="addRect()">Add rectangle</button>
+        <button @click="deleteSelected()">Delete selected</button>
         <button @click="clearCanvas()">Clear</button>
       </div>
       <div class="column">
@@ -71,7 +72,10 @@ export default {
       firebase.database().ref(this.$props.refId + '/' + id).update(data);
     },
     clearCanvas() {
-      this.canvas.remove(...this.canvas.getObjects());
+      this.canvas.remove(...this.canvas.getObjects())
+    },
+    deleteSelected() {
+      this.canvas.remove(...this.canvas.getActiveObjects())
     },
     getFabricElementById(id) {
       return this.canvas.getObjects().filter((item) => { return item.id == id })[0]
