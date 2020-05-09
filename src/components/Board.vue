@@ -84,6 +84,16 @@ export default {
       if (!options.target) return
       firebase.database().ref(this.$props.refId + '/' + options.target.id).remove()
     })
+    this.canvas.on('object:modified', options => {
+      if (!options.target) return
+
+      const data = {
+        uid: this.$props.userId,
+        created: Date.now(),
+        data: options.target.toJSON(['id', options.target.id]),
+      }
+      firebase.database().ref(this.$props.refId + '/' + options.target.id).update(data)
+    })
 
     firebase.database().ref(this.$props.refId).on('child_added', snapshot => {
       const { data } = snapshot.val()
