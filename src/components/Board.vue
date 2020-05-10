@@ -1,11 +1,12 @@
 <template><div>
   <div class="container buttons are-small">
-    <button class="button" @click="saveImage()">Save</button>
-    <button class="button" @click="addRect()">Add rectangle</button>
-    <button class="button" @click="addText()">Add text</button>
-    <button :class="['button', {'is-primary is-active': isActivePencil}]" @click="togglePencil()">Pencil</button>
-    <button class="button" @click="deleteSelected()">Delete selected</button>
-    <button class="button" @click="clearCanvas()">Clear</button>
+    <button class="button" @click="resetAcitve(); saveImage()">Save</button>
+    <button :class="['button', {'is-primary is-active': isActiveSelect}]" @click="resetActive('sel'); toggleSelect()">Select</button>
+    <button class="button" @click="resetActive(); addRect()">Add rectangle</button>
+    <button class="button" @click="resetActive(); addText()">Add text</button>
+    <button :class="['button', {'is-primary is-active': isActivePencil}]" @click="resetActive('pen'); togglePencil()">Pencil</button>
+    <button class="button" @click="resetActive(); deleteSelected()">Delete selected</button>
+    <button class="button" @click="resetActive(); clearCanvas()">Clear</button>
   </div>
   <div class="container">
     <canvas ref="board" />
@@ -17,6 +18,8 @@
 import firebase from "@/firebaseinit"
 import { fabric } from '@/fabric'
 
+fabric.Object.prototype.selectable = false
+
 export default {
   name: "board",
   props: {
@@ -26,9 +29,18 @@ export default {
   data: () => ({
     title: 'Untitled',
     canvas: null,
-    isActivePencil: false
+    isActivePencil: false,
+    isActiveSelect: false,
   }),
   methods: {
+    resetActive(button = null) {
+      this.isActiveSelect = button === 'sel' ? !this.isActiveSelect : false
+      this.canvas.selection = button === 'sel' ? !this.canvas.selection : false
+      this.isActivePencil = button === 'pen' ? !this.isActivePencil : false
+      this.canvas.isDrawingMode = button === 'pen' ? !this.canvas.isDrawingMode : false
+      this.canvas.getObjects().forEach(e => e.selectable = this.isActiveSelect)
+      this.canvas.renderAll()
+    },
     saveImage() {
       let link = document.createElement('a')
       link.setAttribute('download', this.title+'.png')
@@ -44,6 +56,9 @@ export default {
     },
     removeElements(elements) {
       elements.forEach(e => { this.canvas.remove(...[this.getFabricElementById(e.id)]) })
+    },
+    toggleSelect() {
+      if (!this.isActiveSelct) this.canvas.discardActiveObject().renderAll()
     },
     addRect() {
       const id = firebase.database().ref(this.$props.refId).push().key
@@ -64,8 +79,6 @@ export default {
       firebase.database().ref(this.$props.refId + '/' + id).update(data)
     },
     togglePencil(e) {
-      this.isActivePencil = !this.isActivePencil
-      this.canvas.isDrawingMode = !this.canvas.isDrawingMode
       this.canvas.freeDrawingBrush.color = 'red'
       this.canvas.freeDrawingBrush.width = parseInt(2, 10) || 1
     },
@@ -83,7 +96,7 @@ export default {
     const canvasRef = this.$refs.board
 
     this.canvas = new fabric.Canvas(canvasRef, {
-      height: 500, width: 900, backgroundColor: 'white', isDrawingMode: false
+      height: 500, width: 900, selection: false, backgroundColor: 'white', isDrawingMode: false
     })
 
     this.canvas.on('selection:cleared', options => { if (!options.hasOwnProperty('deselected')) return
