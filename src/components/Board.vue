@@ -28,6 +28,13 @@
     <button :class="['button', {'is-primary is-active': this.fill == 'white'}]" @click="chooseFill('white')">White</button>
     <button :class="['button', {'is-primary is-active': this.fill == 'black'}]" @click="chooseFill('black')">Black</button>
   </div>
+  <div class="container buttons are-small">
+    <h2>Style</h2>
+    <button :class="['button', {'is-primary is-active': width == 2}]" @click="width = 2">width 2</button>
+    <button :class="['button', {'is-primary is-active': width == 5}]" @click="width = 5">width 5</button>
+    <button :class="['button', {'is-primary is-active': width == 8}]" @click="width = 8">width 8</button>
+    <button :class="['button', {'is-primary is-active': width == 11}]" @click="width = 11">width 11</button>
+  </div>
   <div class="container">
     <canvas ref="board" />
   </div>
@@ -51,6 +58,7 @@ export default {
     isActiveSelect: true,
     color: 'blue',
     fill: '',
+    width: 2,
   }),
   methods: {
     chooseColor(color) {
@@ -90,7 +98,7 @@ export default {
     addRect() {
       const id = firebase.database().ref(this.$props.refId).push().key
       const rect = new fabric.Rect({
-        id: id, fill: this.fill, stroke: this.color, height: 40, width: 40, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
+        id: id, fill: this.fill, stroke: this.color, strokeWidth: this.width, height: 40, width: 40, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
       })
       const data = { data: rect.toJSON(['id']) }
 
@@ -114,7 +122,7 @@ export default {
       this.isActivePencil = true
       this.canvas.isDrawingMode = true
       this.canvas.freeDrawingBrush.color = this.color
-      this.canvas.freeDrawingBrush.width = parseInt(2, 10) || 1
+      this.canvas.freeDrawingBrush.width = this.width
     },
     clearCanvas() {
       this.canvas.remove(...this.canvas.getObjects())
