@@ -1,22 +1,16 @@
-<template>
-  <div class="hero is-info is-fullheight-with-navbar">
-    <div class="columns">
-      <div class="column is-one-fifth buttons are-small">
-        <button class="button" @click="saveImage()">Save</button>
-        <button class="button" @click="addRect()">Add rectangle</button>
-        <button class="button" @click="addText()">Add text</button>
-        <button :class="['button', {'is-primary is-active': isActivePencil}]" @click="togglePencil()">Pencil</button>
-        <button class="button" @click="deleteSelected()">Delete selected</button>
-        <button class="button" @click="clearCanvas()">Clear</button>
-      </div>
-      <div class="column">
-        <div class="hero-body">
-          <canvas ref="board" />
-        </div>
-      </div>
-    </div>
+<template><div>
+  <div class="container buttons are-small">
+    <button class="button" @click="saveImage()">Save</button>
+    <button class="button" @click="addRect()">Add rectangle</button>
+    <button class="button" @click="addText()">Add text</button>
+    <button :class="['button', {'is-primary is-active': isActivePencil}]" @click="togglePencil()">Pencil</button>
+    <button class="button" @click="deleteSelected()">Delete selected</button>
+    <button class="button" @click="clearCanvas()">Clear</button>
   </div>
-</template>
+  <div class="container">
+    <canvas ref="board" />
+  </div>
+</div></template>
 
 <script>
 
@@ -89,7 +83,7 @@ export default {
     const canvasRef = this.$refs.board
 
     this.canvas = new fabric.Canvas(canvasRef, {
-      height: 500, width: 800, backgroundColor: 'white', isDrawingMode: false
+      height: 500, width: 900, backgroundColor: 'white', isDrawingMode: false
     })
 
     this.canvas.on('selection:cleared', options => { if (!options.hasOwnProperty('deselected')) return
