@@ -39,7 +39,7 @@ export default {
       elements.forEach(e => this.canvas.add(e))
     },
     updateElements(elements) {
-      elements.forEach(e => { e.set(this.getFabricElementById(e.id).toObject()) })
+      elements.forEach(e => { this.getFabricElementById(e.id).set(e) })
       this.canvas.renderAll()
     },
     removeElements(elements) {
