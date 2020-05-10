@@ -1,12 +1,21 @@
 <template><div>
   <div class="container buttons are-small">
-    <button class="button" @click="resetAcitve(); saveImage()">Save</button>
-    <button :class="['button', {'is-primary is-active': isActiveSelect}]" @click="resetActive('sel'); toggleSelect()">Select</button>
-    <button class="button" @click="resetActive(); addRect()">Add rectangle</button>
-    <button class="button" @click="resetActive(); addText()">Add text</button>
-    <button :class="['button', {'is-primary is-active': isActivePencil}]" @click="resetActive('pen'); togglePencil()">Pencil</button>
-    <button class="button" @click="resetActive(); deleteSelected()">Delete selected</button>
-    <button class="button" @click="resetActive(); clearCanvas()">Clear</button>
+    <button class="button" @click="saveImage()">Save</button>
+    <button :class="['button', {'is-primary is-active': isActiveSelect}]" @click="toggleSelect()">Select</button>
+    <button class="button" @click="addRect()">Add rectangle</button>
+    <button class="button" @click="addText()">Add text</button>
+    <button :class="['button', {'is-primary is-active': isActivePencil}]" @click="togglePencil()">Pencil</button>
+    <button class="button" @click="deleteSelected()">Delete selected</button>
+    <button class="button" @click="clearCanvas()">Clear</button>
+  </div>
+  <div class="container buttons are-small">
+    <button :class="['button', {'is-primary is-active': this.color == 'red'}]" @click="chooseColor('red')">Red</button>
+    <button :class="['button', {'is-primary is-active': this.color == 'green'}]" @click="chooseColor('green')">Green</button>
+    <button :class="['button', {'is-primary is-active': this.color == 'blue'}]" @click="chooseColor('blue')">Blue</button>
+    <button :class="['button', {'is-primary is-active': this.color == 'yellow'}]" @click="chooseColor('yellow')">Yellow</button>
+    <button :class="['button', {'is-primary is-active': this.color == 'pink'}]" @click="chooseColor('pink')">Pink</button>
+    <button :class="['button', {'is-primary is-active': this.color == 'white'}]" @click="chooseColor('white')">White</button>
+    <button :class="['button', {'is-primary is-active': this.color == 'black'}]" @click="chooseColor('black')">Black</button>
   </div>
   <div class="container">
     <canvas ref="board" />
@@ -18,8 +27,6 @@
 import firebase from "@/firebaseinit"
 import { fabric } from '@/fabric'
 
-fabric.Object.prototype.selectable = false
-
 export default {
   name: "board",
   props: {
@@ -30,63 +37,77 @@ export default {
     title: 'Untitled',
     canvas: null,
     isActivePencil: false,
-    isActiveSelect: false,
+    isActiveSelect: true,
+    color: 'blue',
   }),
   methods: {
-    resetActive(button = null) {
-      this.isActiveSelect = button === 'sel' ? !this.isActiveSelect : false
-      this.canvas.selection = button === 'sel' ? !this.canvas.selection : false
-      this.isActivePencil = button === 'pen' ? !this.isActivePencil : false
-      this.canvas.isDrawingMode = button === 'pen' ? !this.canvas.isDrawingMode : false
-      this.canvas.getObjects().forEach(e => e.selectable = this.isActiveSelect)
-      this.canvas.renderAll()
+    chooseColor(color) {
+      this.color = color
+      this.canvas.freeDrawingBrush.color = this.color
     },
     saveImage() {
       let link = document.createElement('a')
       link.setAttribute('download', this.title+'.png')
       link.setAttribute('href', this.canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream'))
       link.click()
+
+      this.canvas.isDrawingMode = false
+      this.isActivePencil = false
+      this.isActiveSelect = false
     },
     addElements(elements) {
       elements.forEach(e => this.canvas.add(e))
     },
     updateElements(elements) {
-      elements.forEach(e => { this.getFabricElementById(e.id).set(e) })
+      elements.forEach(e => this.getFabricElementById(e.id).set(e))
       this.canvas.renderAll()
     },
     removeElements(elements) {
-      elements.forEach(e => { this.canvas.remove(...[this.getFabricElementById(e.id)]) })
+      elements.forEach(e => this.canvas.remove(...[this.getFabricElementById(e.id)]))
     },
     toggleSelect() {
-      if (!this.isActiveSelct) this.canvas.discardActiveObject().renderAll()
+      if (!this.isActiveSelect) this.canvas.discardActiveObject().renderAll()
+
+      this.canvas.isDrawingMode = false
+      this.isActivePencil = false
+      this.isActiveSelect = true
     },
     addRect() {
       const id = firebase.database().ref(this.$props.refId).push().key
       const rect = new fabric.Rect({
-        id: id, fill: 'red', height: 40, width: 40, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
+        id: id, fill: this.color, height: 40, width: 40, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
       })
       const data = { data: rect.toJSON(['id']) }
 
       firebase.database().ref(this.$props.refId + '/' + id).update(data)
+
+      this.toggleSelect()
     },
     addText() {
       const id = firebase.database().ref(this.$props.refId).push().key
       const el = new fabric.IText('Text', {
-        id: id, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
+        id: id, stroke: this.color, fill: this.color, top: 50, left: 50
       })
       const data = { data: el.toJSON(['id']) }
 
       firebase.database().ref(this.$props.refId + '/' + id).update(data)
+
+      this.toggleSelect()
     },
     togglePencil(e) {
-      this.canvas.freeDrawingBrush.color = 'red'
+      this.isActiveSelect = false
+      this.isActivePencil = true
+      this.canvas.isDrawingMode = true
+      this.canvas.freeDrawingBrush.color = this.color
       this.canvas.freeDrawingBrush.width = parseInt(2, 10) || 1
     },
     clearCanvas() {
       this.canvas.remove(...this.canvas.getObjects())
+      this.toggleSelect()
     },
     deleteSelected() {
       this.canvas.remove(...this.canvas.getActiveObjects())
+      this.toggleSelect()
     },
     getFabricElementById(id) {
       return this.canvas.getObjects().filter((item) => { return item.id == id })[0]
@@ -96,7 +117,7 @@ export default {
     const canvasRef = this.$refs.board
 
     this.canvas = new fabric.Canvas(canvasRef, {
-      height: 500, width: 900, selection: false, backgroundColor: 'white', isDrawingMode: false
+      height: 500, width: 900, backgroundColor: 'white', isDrawingMode: false
     })
 
     this.canvas.on('selection:cleared', options => { if (!options.hasOwnProperty('deselected')) return
