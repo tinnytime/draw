@@ -29,7 +29,7 @@
     <button :class="['button', {'is-primary is-active': this.fill == 'black'}]" @click="fill = 'black'">Black</button>
   </div>
   <div class="container buttons are-small">
-    <h2>Style</h2>
+    <h2>Shape style</h2>
     <button :class="['button', {'is-primary is-active': width == 2}]" @click="width = 2">width 2</button>
     <button :class="['button', {'is-primary is-active': width == 5}]" @click="width = 5">width 5</button>
     <button :class="['button', {'is-primary is-active': width == 8}]" @click="width = 8">width 8</button>
@@ -127,14 +127,41 @@ export default {
     },
     getFabricElementById(id) {
       return this.canvas.getObjects().filter((item) => { return item.id == id })[0]
+    },
+    onElementSelected(element) {
+      const el = element.target
+
+      if (el.hasOwnProperty('fill')) this.fill = el.fill
+      if (el.hasOwnProperty('stroke')) {
+        this.color = el.stroke
+        this.canvas.freeDrawingBrush.color = el.stroke
+      }
+      if (el.hasOwnProperty('strokeWidth') && el.type !== 'itext') {
+        this.width = el.strokeWidth
+        this.canvas.freeDrawingBrush.width = el.strokeWidth
+      }
     }
   },
   watch: {
-    color() {
-      this.canvas.freeDrawingBrush.color = this.color
+    color(val) {
+      this.canvas.freeDrawingBrush.color = val
+      this.canvas.getActiveObjects().forEach(el => {
+        if (el.hasOwnProperty('stroke')) el.set('stroke', val)
+      })
+      this.canvas.renderAll()
     },
-    width() {
-      this.canvas.freeDrawingBrush.width = this.width
+    fill(val) {
+      this.canvas.getActiveObjects().forEach(el => {
+        if (el.hasOwnProperty('fill')) el.set('fill', val)
+      })
+      this.canvas.renderAll()
+    },
+    width(val) {
+      this.canvas.freeDrawingBrush.width = val
+      this.canvas.getActiveObjects().forEach(el => {
+        if (el.hasOwnProperty('strokeWidth') && el.type !== 'itext') el.set('strokeWidth', val)
+      })
+      this.canvas.renderAll()
     }
   },
   mounted() {
@@ -150,6 +177,8 @@ export default {
         firebase.database().ref(this.$props.refId + '/' + el.id).update(data)
       })
     })
+
+    this.canvas.on({ 'selection:created': this.onElementSelected, 'selection:updated': this.onElementSelected })
 
     this.canvas.on('object:added', options => { if (!options.target) return
       const el = options.target
