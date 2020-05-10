@@ -10,23 +10,23 @@
   </div>
   <div class="container buttons are-small">
     <h2>Colour</h2>
-    <button :class="['button', {'is-primary is-active': this.color == 'red'}]" @click="chooseColor('red')">Red</button>
-    <button :class="['button', {'is-primary is-active': this.color == 'green'}]" @click="chooseColor('green')">Green</button>
-    <button :class="['button', {'is-primary is-active': this.color == 'blue'}]" @click="chooseColor('blue')">Blue</button>
-    <button :class="['button', {'is-primary is-active': this.color == 'yellow'}]" @click="chooseColor('yellow')">Yellow</button>
-    <button :class="['button', {'is-primary is-active': this.color == 'pink'}]" @click="chooseColor('pink')">Pink</button>
-    <button :class="['button', {'is-primary is-active': this.color == 'white'}]" @click="chooseColor('white')">White</button>
-    <button :class="['button', {'is-primary is-active': this.color == 'black'}]" @click="chooseColor('black')">Black</button>
+    <button :class="['button', {'is-primary is-active': this.color == 'red'}]" @click="color = 'red'">Red</button>
+    <button :class="['button', {'is-primary is-active': this.color == 'green'}]" @click="color = 'green'">Green</button>
+    <button :class="['button', {'is-primary is-active': this.color == 'blue'}]" @click="color = 'blue'">Blue</button>
+    <button :class="['button', {'is-primary is-active': this.color == 'yellow'}]" @click="color = 'yellow'">Yellow</button>
+    <button :class="['button', {'is-primary is-active': this.color == 'pink'}]" @click="color = 'pink'">Pink</button>
+    <button :class="['button', {'is-primary is-active': this.color == 'white'}]" @click="color = 'white'">White</button>
+    <button :class="['button', {'is-primary is-active': this.color == 'black'}]" @click="color = 'black'">Black</button>
   </div>
   <div class="container buttons are-small">
     <h2>Fill</h2>
-    <button :class="['button', {'is-primary is-active': this.fill == 'red'}]" @click="chooseFill('red')">Red</button>
-    <button :class="['button', {'is-primary is-active': this.fill == 'green'}]" @click="chooseFill('green')">Green</button>
-    <button :class="['button', {'is-primary is-active': this.fill == 'blue'}]" @click="chooseFill('blue')">Blue</button>
-    <button :class="['button', {'is-primary is-active': this.fill == 'yellow'}]" @click="chooseFill('yellow')">Yellow</button>
-    <button :class="['button', {'is-primary is-active': this.fill == 'pink'}]" @click="chooseFill('pink')">Pink</button>
-    <button :class="['button', {'is-primary is-active': this.fill == 'white'}]" @click="chooseFill('white')">White</button>
-    <button :class="['button', {'is-primary is-active': this.fill == 'black'}]" @click="chooseFill('black')">Black</button>
+    <button :class="['button', {'is-primary is-active': this.fill == 'red'}]" @click="fill = 'red'">Red</button>
+    <button :class="['button', {'is-primary is-active': this.fill == 'green'}]" @click="fill = 'green'">Green</button>
+    <button :class="['button', {'is-primary is-active': this.fill == 'blue'}]" @click="fill = 'blue'">Blue</button>
+    <button :class="['button', {'is-primary is-active': this.fill == 'yellow'}]" @click="fill = 'yellow'">Yellow</button>
+    <button :class="['button', {'is-primary is-active': this.fill == 'pink'}]" @click="fill = 'pink'">Pink</button>
+    <button :class="['button', {'is-primary is-active': this.fill == 'white'}]" @click="fill = 'white'">White</button>
+    <button :class="['button', {'is-primary is-active': this.fill == 'black'}]" @click="fill = 'black'">Black</button>
   </div>
   <div class="container buttons are-small">
     <h2>Style</h2>
@@ -61,12 +61,6 @@ export default {
     width: 2,
   }),
   methods: {
-    chooseColor(color) {
-      this.color = color
-    },
-    chooseFill(color) {
-      this.fill = color
-    },
     saveImage() {
       let link = document.createElement('a')
       link.setAttribute('download', this.title+'.png')
