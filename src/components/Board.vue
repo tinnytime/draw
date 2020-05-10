@@ -9,6 +9,7 @@
     <button class="button" @click="clearCanvas()">Clear</button>
   </div>
   <div class="container buttons are-small">
+    <h2>Colour</h2>
     <button :class="['button', {'is-primary is-active': this.color == 'red'}]" @click="chooseColor('red')">Red</button>
     <button :class="['button', {'is-primary is-active': this.color == 'green'}]" @click="chooseColor('green')">Green</button>
     <button :class="['button', {'is-primary is-active': this.color == 'blue'}]" @click="chooseColor('blue')">Blue</button>
@@ -16,6 +17,16 @@
     <button :class="['button', {'is-primary is-active': this.color == 'pink'}]" @click="chooseColor('pink')">Pink</button>
     <button :class="['button', {'is-primary is-active': this.color == 'white'}]" @click="chooseColor('white')">White</button>
     <button :class="['button', {'is-primary is-active': this.color == 'black'}]" @click="chooseColor('black')">Black</button>
+  </div>
+  <div class="container buttons are-small">
+    <h2>Fill</h2>
+    <button :class="['button', {'is-primary is-active': this.fill == 'red'}]" @click="chooseFill('red')">Red</button>
+    <button :class="['button', {'is-primary is-active': this.fill == 'green'}]" @click="chooseFill('green')">Green</button>
+    <button :class="['button', {'is-primary is-active': this.fill == 'blue'}]" @click="chooseFill('blue')">Blue</button>
+    <button :class="['button', {'is-primary is-active': this.fill == 'yellow'}]" @click="chooseFill('yellow')">Yellow</button>
+    <button :class="['button', {'is-primary is-active': this.fill == 'pink'}]" @click="chooseFill('pink')">Pink</button>
+    <button :class="['button', {'is-primary is-active': this.fill == 'white'}]" @click="chooseFill('white')">White</button>
+    <button :class="['button', {'is-primary is-active': this.fill == 'black'}]" @click="chooseFill('black')">Black</button>
   </div>
   <div class="container">
     <canvas ref="board" />
@@ -39,11 +50,15 @@ export default {
     isActivePencil: false,
     isActiveSelect: true,
     color: 'blue',
+    fill: '',
   }),
   methods: {
     chooseColor(color) {
       this.color = color
       this.canvas.freeDrawingBrush.color = this.color
+    },
+    chooseFill(color) {
+      this.fill = color
     },
     saveImage() {
       let link = document.createElement('a')
@@ -75,7 +90,7 @@ export default {
     addRect() {
       const id = firebase.database().ref(this.$props.refId).push().key
       const rect = new fabric.Rect({
-        id: id, fill: this.color, height: 40, width: 40, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
+        id: id, fill: this.fill, stroke: this.color, height: 40, width: 40, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
       })
       const data = { data: rect.toJSON(['id']) }
 
@@ -86,7 +101,7 @@ export default {
     addText() {
       const id = firebase.database().ref(this.$props.refId).push().key
       const el = new fabric.IText('Text', {
-        id: id, stroke: this.color, fill: this.color, top: 50, left: 50
+        id: id, stroke: this.color, fill: this.color, textBackgroundColor: this.fill, top: 50, left: 50
       })
       const data = { data: el.toJSON(['id']) }
 
