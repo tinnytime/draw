@@ -63,7 +63,6 @@ export default {
   methods: {
     chooseColor(color) {
       this.color = color
-      this.canvas.freeDrawingBrush.color = this.color
     },
     chooseFill(color) {
       this.fill = color
@@ -134,6 +133,14 @@ export default {
     },
     getFabricElementById(id) {
       return this.canvas.getObjects().filter((item) => { return item.id == id })[0]
+    }
+  },
+  watch: {
+    color() {
+      this.canvas.freeDrawingBrush.color = this.color
+    },
+    width() {
+      this.canvas.freeDrawingBrush.width = this.width
     }
   },
   mounted() {
