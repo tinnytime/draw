@@ -13,6 +13,7 @@
     <button class="button" @click="addCircle()">Add circle</button>
     <button class="button" @click="addTriangle()">Add triangle</button>
     <button class="button" @click="addLine()">Add line</button>
+    <button class="button" @click="addArrow()">Add arrow</button>
   </div>
   <div class="container buttons are-small">
     <h2>Colour</h2>
@@ -149,6 +150,18 @@ export default {
       // Use a rectangle because fabric.Line() has issues...
       const rect = new fabric.Rect({
         id: id, fill: this.color, typePatched: 'line', stroke: this.color, strokeWidth: this.width, height: 5, width: 200, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
+      })
+      const data = { data: rect.toJSON(['id', 'typePatched']) }
+
+      firebase.database().ref(this.$props.refId + '/' + id).update(data)
+
+      this.toggleSelect()
+    },
+    addArrow() {
+      const id = firebase.database().ref(this.$props.refId).push().key
+      const rect = new fabric.Polygon([{x:0, y:0}, {x:0, y:-10}, {x:80, y:-10}, {x:80, y:-20}, {x:100, y:-5}, {x:80, y:10},
+      {x:80, y:0}], {
+        id: id, fill: this.fill, typePatched: 'line', stroke: this.color, strokeWidth: this.width, height: 100, width: 100, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
       })
       const data = { data: rect.toJSON(['id', 'typePatched']) }
 
