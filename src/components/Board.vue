@@ -2,11 +2,15 @@
   <div class="container buttons are-small">
     <button class="button" @click="saveImage()">Save</button>
     <button :class="['button', {'is-primary is-active': isActiveSelect}]" @click="toggleSelect()">Select</button>
-    <button class="button" @click="addRect()">Add rectangle</button>
     <button class="button" @click="addText()">Add text</button>
     <button :class="['button', {'is-primary is-active': isActivePencil}]" @click="togglePencil()">Pencil</button>
     <button class="button" @click="deleteSelected()">Delete selected</button>
     <button class="button" @click="clearCanvas()">Clear</button>
+  </div>
+  <div class="container buttons are-small">
+    <h2>Shapes</h2>
+    <button class="button" @click="addRect()">Add rectangle</button>
+    <button class="button" @click="addCircle()">Add circle</button>
   </div>
   <div class="container buttons are-small">
     <h2>Colour</h2>
@@ -96,6 +100,17 @@ export default {
         id: id, fill: this.fill, stroke: this.color, strokeWidth: this.width, height: 40, width: 40, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
       })
       const data = { data: rect.toJSON(['id']) }
+
+      firebase.database().ref(this.$props.refId + '/' + id).update(data)
+
+      this.toggleSelect()
+    },
+    addCircle() {
+      const id = firebase.database().ref(this.$props.refId).push().key
+      const el = new fabric.Circle({
+        id: id, fill: this.fill, stroke: this.color, strokeWidth: this.width, radius: 20, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
+      })
+      const data = { data: el.toJSON(['id']) }
 
       firebase.database().ref(this.$props.refId + '/' + id).update(data)
 
