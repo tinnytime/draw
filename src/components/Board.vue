@@ -17,6 +17,7 @@
     <button :class="['button', {'is-primary is-active': this.color == 'pink'}]" @click="color = 'pink'">Pink</button>
     <button :class="['button', {'is-primary is-active': this.color == 'white'}]" @click="color = 'white'">White</button>
     <button :class="['button', {'is-primary is-active': this.color == 'black'}]" @click="color = 'black'">Black</button>
+    <button :class="['button', {'is-primary is-active': this.color == ''}]" @click="color = ''">None</button>
   </div>
   <div class="container buttons are-small">
     <h2>Fill</h2>
@@ -27,6 +28,7 @@
     <button :class="['button', {'is-primary is-active': this.fill == 'pink'}]" @click="fill = 'pink'">Pink</button>
     <button :class="['button', {'is-primary is-active': this.fill == 'white'}]" @click="fill = 'white'">White</button>
     <button :class="['button', {'is-primary is-active': this.fill == 'black'}]" @click="fill = 'black'">Black</button>
+    <button :class="['button', {'is-primary is-active': this.fill == ''}]" @click="fill = ''">None</button>
   </div>
   <div class="container buttons are-small">
     <h2>Shape style</h2>
