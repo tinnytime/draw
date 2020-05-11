@@ -69,15 +69,11 @@
 
 <script>
 
-import firebase from "@/firebaseinit"
+import firebase, { db } from "@/firebaseinit"
 import { fabric } from '@/fabric'
 
 export default {
   name: "board",
-  props: {
-    refId: String,
-    userId: Number
-  },
   data: () => ({
     title: 'Untitled',
     canvas: null,
@@ -139,64 +135,59 @@ export default {
       return this.width || 2
     },
     addRect() {
-      const id = firebase.database().ref(this.$props.refId).push().key
+      const id = db.createNewElementKey()
       const rect = new fabric.Rect({
         id: id, fill: this.fill, stroke: this.color, strokeWidth: this.getWidth(), height: 40, width: 40, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
       })
       const data = { data: rect.toJSON(['id']) }
 
-      firebase.database().ref(this.$props.refId + '/' + id).update(data)
-
+      db.updateElementById(id, data)
       this.toggleSelect()
     },
     addCircle() {
-      const id = firebase.database().ref(this.$props.refId).push().key
+      const id = db.createNewElementKey()
       const el = new fabric.Circle({
         id: id, fill: this.fill, stroke: this.color, strokeWidth: this.getWidth(), radius: 20, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
       })
       const data = { data: el.toJSON(['id']) }
 
-      firebase.database().ref(this.$props.refId + '/' + id).update(data)
-
+      db.updateElementById(id, data)
       this.toggleSelect()
     },
     addTriangle() {
-      const id = firebase.database().ref(this.$props.refId).push().key
+      const id = db.createNewElementKey()
       const rect = new fabric.Polygon([{x: 0, y: 0}, {x: -40, y: 60}, {x: 40, y: 60}], {
         id: id, fill: this.fill, stroke: this.color, strokeWidth: this.getWidth(), height: 100, width: 100, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
       })
       const data = { data: rect.toJSON(['id']) }
 
-      firebase.database().ref(this.$props.refId + '/' + id).update(data)
-
+      db.updateElementById(id, data)
       this.toggleSelect()
     },
     addLine() {
-      const id = firebase.database().ref(this.$props.refId).push().key
+      const id = db.createNewElementKey()
       // Use a rectangle because fabric.Line() has issues...
       const rect = new fabric.Rect({
         id: id, fill: this.color, typePatched: 'line', stroke: this.color, strokeWidth: this.getWidth(), height: 5, width: 200, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
       })
       const data = { data: rect.toJSON(['id', 'typePatched']) }
 
-      firebase.database().ref(this.$props.refId + '/' + id).update(data)
-
+      db.updateElementById(id, data)
       this.toggleSelect()
     },
     addArrow() {
-      const id = firebase.database().ref(this.$props.refId).push().key
+      const id = db.createNewElementKey()
       const rect = new fabric.Polygon([{x:0, y:0}, {x:0, y:-10}, {x:80, y:-10}, {x:80, y:-20}, {x:100, y:-5}, {x:80, y:10},
       {x:80, y:0}], {
         id: id, fill: this.fill, typePatched: 'line', stroke: this.color, strokeWidth: this.getWidth(), height: 100, width: 100, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
       })
       const data = { data: rect.toJSON(['id', 'typePatched']) }
 
-      firebase.database().ref(this.$props.refId + '/' + id).update(data)
-
+      db.updateElementById(id, data)
       this.toggleSelect()
     },
     addText() {
-      const id = firebase.database().ref(this.$props.refId).push().key
+      const id = db.createNewElementKey()
       const el = new fabric.IText('Text', {
         id: id, stroke: this.color, fill: this.color, fontSize: 32, fontFamily: this.fontFamily, textBackgroundColor: this.fill, top: 50, left: 50
       })
@@ -205,8 +196,7 @@ export default {
       el.underline = this.fontUnderline
       const data = { data: el.toJSON(['id']) }
 
-      firebase.database().ref(this.$props.refId + '/' + id).update(data)
-
+      db.updateElementById(id, data)
       this.toggleSelect()
     },
     togglePencil(e) {
@@ -321,7 +311,7 @@ export default {
     this.canvas.on('selection:cleared', options => { if (!options.hasOwnProperty('deselected')) return
       options.deselected.forEach(el => {
         const data = { data: el.toJSON(['id', 'typePatched']) }
-        firebase.database().ref(this.$props.refId + '/' + el.id).update(data)
+        db.updateElementById(el.id, data)
       })
     })
 
@@ -333,34 +323,34 @@ export default {
       if (el.type !== 'path') return
       if (el.hasOwnProperty('id') && el.id.length > 0) return
 
-      const id = firebase.database().ref(this.$props.refId).push().key
+      const id = db.createNewElementKey()
       el.id = id
       el.fill = el.fill === null ? '' : el.fill
 
       const data = { data: el.toJSON(['id', 'typePatched']) }
-      firebase.database().ref(this.$props.refId + '/' + id).update(data)
+      db.updateElementById(id, data)
     })
 
     this.canvas.on('object:removed', options => { if (!options.target) return
-      firebase.database().ref(this.$props.refId + '/' + options.target.id).remove()
+      db.removeElementById(options.target.id)
     })
 
     this.canvas.on('object:modified', options => { if (!options.target) return
       if (options.target.type === 'activeSelection') return
 
       const data = { data: options.target.toJSON(['id', 'typePatched']) }
-      firebase.database().ref(this.$props.refId + '/' + options.target.id).update(data)
+      db.updateElementById(options.target.id, data)
     })
 
-    firebase.database().ref(this.$props.refId).on('child_added', snapshot => {
+    firebase.database().ref(db.refId()).on('child_added', snapshot => {
       const { data } = snapshot.val()
       fabric.util.enlivenObjects([data], this.addElements)
     })
-    firebase.database().ref(this.$props.refId).on('child_changed', snapshot => {
+    firebase.database().ref(db.refId()).on('child_changed', snapshot => {
       const { data } = snapshot.val()
       fabric.util.enlivenObjects([data], this.updateElements)
     })
-    firebase.database().ref(this.$props.refId).on('child_removed', snapshot => {
+    firebase.database().ref(db.refId()).on('child_removed', snapshot => {
       const { data } = snapshot.val()
       fabric.util.enlivenObjects([data], this.removeElements)
     })

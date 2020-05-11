@@ -1,6 +1,6 @@
+import router from '@/router'
 import * as firebase from "firebase/app";
 import "firebase/database"
-import store from '@/store/'
 
 const firebaseConfig = {
     apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
@@ -25,7 +25,20 @@ const _firebaseConfig = {
 
 firebase.initializeApp(_firebaseConfig);
 
-//store.dispatch("fetchUser", user);
+export const db = {
+  refId() {
+    if (!router.currentRoute.params.id) throw 'Error: ref not set!'
+    return ['drawings', router.currentRoute.params.id, 'elements'].join('/')
+  },
+  createNewElementKey() {
+    return firebase.database().ref(this.refId()).push().key
+  },
+  updateElementById(id, data) {
+    firebase.database().ref(this.refId() + '/' + id).update(data)
+  },
+  removeElementById(id) {
+    firebase.database().ref(this.refId() + '/' + id).remove()
+  },
+}
 
-
-export default firebase;
+export default firebase
