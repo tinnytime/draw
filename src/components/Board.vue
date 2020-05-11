@@ -11,6 +11,7 @@
     <h2>Shapes</h2>
     <button class="button" @click="addRect()">Add rectangle</button>
     <button class="button" @click="addCircle()">Add circle</button>
+    <button class="button" @click="addLine()">Add line</button>
   </div>
   <div class="container buttons are-small">
     <h2>Colour</h2>
@@ -78,11 +79,26 @@ export default {
       this.isActiveSelect = false
     },
     addElements(elements) {
-      elements.forEach(e => this.canvas.add(e))
+      elements.forEach(e => {
+        this.patchShape(e)
+        this.canvas.add(e)
+      })
+      this.canvas.renderAll()
     },
     updateElements(elements) {
-      elements.forEach(e => this.getFabricElementById(e.id).set(e))
+      elements.forEach(e => {
+        this.patchShape(e)
+        this.getFabricElementById(e.id).set(e)
+      })
       this.canvas.renderAll()
+    },
+    patchShape(el) {
+      if (!el.hasOwnProperty('typePatched') || el.typePatched !== 'line') return
+
+      el.setControlsVisibility({
+        'bl': false, 'br': false, 'mb': false, 'mt': false, 'tl': false, 'tr': false,
+        'ml': true, 'mr': true,
+      })
     },
     removeElements(elements) {
       elements.forEach(e => this.canvas.remove(...[this.getFabricElementById(e.id)]))
@@ -111,6 +127,18 @@ export default {
         id: id, fill: this.fill, stroke: this.color, strokeWidth: this.width, radius: 20, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
       })
       const data = { data: el.toJSON(['id']) }
+
+      firebase.database().ref(this.$props.refId + '/' + id).update(data)
+
+      this.toggleSelect()
+    },
+    addLine() {
+      const id = firebase.database().ref(this.$props.refId).push().key
+      // Use a rectangle because fabric.Line() has issues...
+      const rect = new fabric.Rect({
+        id: id, fill: this.color, typePatched: 'line', stroke: this.color, strokeWidth: this.width, height: 5, width: 200, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
+      })
+      const data = { data: rect.toJSON(['id', 'typePatched']) }
 
       firebase.database().ref(this.$props.refId + '/' + id).update(data)
 
@@ -190,7 +218,7 @@ export default {
 
     this.canvas.on('selection:cleared', options => { if (!options.hasOwnProperty('deselected')) return
       options.deselected.forEach(el => {
-        const data = { data: el.toJSON(['id']) }
+        const data = { data: el.toJSON(['id', 'typePatched']) }
         firebase.database().ref(this.$props.refId + '/' + el.id).update(data)
       })
     })
@@ -207,7 +235,7 @@ export default {
       el.id = id
       el.fill = el.fill === null ? '' : el.fill
 
-      const data = { data: el.toJSON(['id']) }
+      const data = { data: el.toJSON(['id', 'typePatched']) }
       firebase.database().ref(this.$props.refId + '/' + id).update(data)
     })
 
@@ -218,7 +246,7 @@ export default {
     this.canvas.on('object:modified', options => { if (!options.target) return
       if (options.target.type === 'activeSelection') return
 
-      const data = { data: options.target.toJSON(['id', options.target.id]) }
+      const data = { data: options.target.toJSON(['id', 'typePatched']) }
       firebase.database().ref(this.$props.refId + '/' + options.target.id).update(data)
     })
 
