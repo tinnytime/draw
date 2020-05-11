@@ -11,6 +11,7 @@
     <h2>Shapes</h2>
     <button class="button" @click="addRect()">Add rectangle</button>
     <button class="button" @click="addCircle()">Add circle</button>
+    <button class="button" @click="addTriangle()">Add triangle</button>
     <button class="button" @click="addLine()">Add line</button>
   </div>
   <div class="container buttons are-small">
@@ -127,6 +128,17 @@ export default {
         id: id, fill: this.fill, stroke: this.color, strokeWidth: this.width, radius: 20, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
       })
       const data = { data: el.toJSON(['id']) }
+
+      firebase.database().ref(this.$props.refId + '/' + id).update(data)
+
+      this.toggleSelect()
+    },
+    addTriangle() {
+      const id = firebase.database().ref(this.$props.refId).push().key
+      const rect = new fabric.Polygon([{x: 0, y: 0}, {x: -40, y: 60}, {x: 40, y: 60}], {
+        id: id, fill: this.fill, stroke: this.color, strokeWidth: this.width, height: 100, width: 100, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
+      })
+      const data = { data: rect.toJSON(['id']) }
 
       firebase.database().ref(this.$props.refId + '/' + id).update(data)
 
