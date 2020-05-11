@@ -59,8 +59,7 @@
     <button :class="['button', {'is-primary is-active': fontFamily == 'Comic Sans MS'}]" @click="fontFamily = 'Comic Sans MS'">Font Comic Sans</button>
     <button :class="['button', {'is-primary is-active': fontItalic == true}]" @click="fontItalic = !fontItalic">Font Italic</button>
     <button :class="['button', {'is-primary is-active': fontBold == true}]" @click="fontBold = !fontBold">Font Bold</button>
-    <button :class="['button', {'is-primary is-active': fontUnderline == true}]" @click="fontUnderline =
-    !fontUnderline">Font Underline</button>
+    <button :class="['button', {'is-primary is-active': fontUnderline == true}]" @click="fontUnderline = !fontUnderline">Font Underline</button>
   </div>
   <div class="container">
     <canvas ref="board" />
@@ -100,16 +99,16 @@ export default {
       this.isActiveSelect = false
     },
     addElements(elements) {
-      elements.forEach(e => {
-        this.patchShape(e)
-        this.canvas.add(e)
+      elements.forEach(el => {
+        this.patchShape(el)
+        this.canvas.add(el)
       })
       this.canvas.renderAll()
     },
     updateElements(elements) {
-      elements.forEach(e => {
-        this.patchShape(e)
-        this.getFabricElementById(e.id).set(e)
+      elements.forEach(el => {
+        this.patchShape(el)
+        this.getFabricElementById(el.id).set(el)
       })
       this.canvas.renderAll()
     },
@@ -122,7 +121,7 @@ export default {
       })
     },
     removeElements(elements) {
-      elements.forEach(e => this.canvas.remove(...[this.getFabricElementById(e.id)]))
+      elements.forEach(el => this.canvas.remove(...[this.getFabricElementById(el.id)]))
     },
     toggleSelect() {
       if (!this.isActiveSelect) this.canvas.discardActiveObject().renderAll()
@@ -156,9 +155,10 @@ export default {
     },
     addTriangle() {
       const id = db.createNewElementKey()
-      const rect = new fabric.Polygon([{x: 0, y: 0}, {x: -40, y: 60}, {x: 40, y: 60}], {
-        id: id, fill: this.fill, stroke: this.color, strokeWidth: this.getWidth(), height: 100, width: 100, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
-      })
+      const rect = new fabric.Polygon(
+        [ {x: 0, y: 0}, {x: -40, y: 60}, {x: 40, y: 60} ],
+        { id: id, fill: this.fill, stroke: this.color, strokeWidth: this.getWidth(), height: 100, width: 100, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400) }
+      )
       const data = { data: rect.toJSON(['id']) }
 
       db.updateElementById(id, data)
@@ -177,10 +177,10 @@ export default {
     },
     addArrow() {
       const id = db.createNewElementKey()
-      const rect = new fabric.Polygon([{x:0, y:0}, {x:0, y:-10}, {x:80, y:-10}, {x:80, y:-20}, {x:100, y:-5}, {x:80, y:10},
-      {x:80, y:0}], {
-        id: id, fill: this.fill, typePatched: 'line', stroke: this.color, strokeWidth: this.getWidth(), height: 100, width: 100, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
-      })
+      const rect = new fabric.Polygon(
+        [ {x:0, y:0}, {x:0, y:-10}, {x:80, y:-10}, {x:80, y:-20}, {x:100, y:-5}, {x:80, y:10}, {x:80, y:0} ],
+        { id: id, fill: this.fill, typePatched: 'line', stroke: this.color, strokeWidth: this.getWidth(), height: 100, width: 100, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400) }
+      )
       const data = { data: rect.toJSON(['id', 'typePatched']) }
 
       db.updateElementById(id, data)
