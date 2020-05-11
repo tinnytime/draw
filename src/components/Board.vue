@@ -53,8 +53,14 @@
   </div>
   <div class="container buttons are-small">
     <h2>Text style</h2>
-    <button :class="['button', {'is-primary is-active': font == 'Arial'}]" @click="font = 'Arial'">Font Arial</button>
-    <button :class="['button', {'is-primary is-active': font == 'Courier New'}]" @click="font = 'Courier New'">Font Courier New</button>
+    <button :class="['button', {'is-primary is-active': fontFamily == 'Arial'}]" @click="fontFamily = 'Arial'">Font Arial</button>
+    <button :class="['button', {'is-primary is-active': fontFamily == 'Courier New'}]" @click="fontFamily = 'Courier New'">Font Courier New</button>
+    <button :class="['button', {'is-primary is-active': fontFamily == 'Lucida Console'}]" @click="fontFamily = 'Lucida Console'">Font Lucida Console</button>
+    <button :class="['button', {'is-primary is-active': fontFamily == 'Comic Sans MS'}]" @click="fontFamily = 'Comic Sans MS'">Font Comic Sans</button>
+    <button :class="['button', {'is-primary is-active': fontItalic == true}]" @click="fontItalic = !fontItalic">Font Italic</button>
+    <button :class="['button', {'is-primary is-active': fontBold == true}]" @click="fontBold = !fontBold">Font Bold</button>
+    <button :class="['button', {'is-primary is-active': fontUnderline == true}]" @click="fontUnderline =
+    !fontUnderline">Font Underline</button>
   </div>
   <div class="container">
     <canvas ref="board" />
@@ -81,7 +87,10 @@ export default {
     color: 'blue',
     fill: '',
     width: 2,
-    font: 'Arial'
+    fontFamily: 'Arial',
+    fontItalic: false,
+    fontBold: false,
+    fontUnderline: false,
   }),
   methods: {
     saveImage() {
@@ -189,8 +198,11 @@ export default {
     addText() {
       const id = firebase.database().ref(this.$props.refId).push().key
       const el = new fabric.IText('Text', {
-        id: id, stroke: this.color, fill: this.color, fontFamily: this.font, textBackgroundColor: this.fill, top: 50, left: 50
+        id: id, stroke: this.color, fill: this.color, fontSize: 32, fontFamily: this.fontFamily, textBackgroundColor: this.fill, top: 50, left: 50
       })
+      el.fontWeight = this.fontBold ? 'bold' : 'normal'
+      el.fontStyle = this.fontItalic ? 'italic' : 'normal'
+      el.underline = this.fontUnderline
       const data = { data: el.toJSON(['id']) }
 
       firebase.database().ref(this.$props.refId + '/' + id).update(data)
@@ -223,7 +235,10 @@ export default {
         this.fill = el.textBackgroundColor
         this.canvas.freeDrawingBrush.color = el.stroke
         this.width = ''
-        this.font = el.fontFamily
+        this.fontFamily = el.fontFamily
+        this.fontBold = el.fontWeight === 'bold'
+        this.fontItalic = el.fontStyle === 'italic'
+        this.fontUnderline = el.underline
         return
       }
 
@@ -266,6 +281,32 @@ export default {
       this.canvas.freeDrawingBrush.width = val
       this.canvas.getActiveObjects().forEach(el => {
         if (el.hasOwnProperty('strokeWidth') && el.type !== 'i-text') el.set('strokeWidth', val)
+      })
+      this.canvas.renderAll()
+    },
+    fontFamily(val) {
+      this.canvas.getActiveObjects().forEach(el => { (el.type === 'i-text') ? el.fontFamily = val : ''})
+      this.canvas.renderAll()
+    },
+    fontBold(val) {
+      this.canvas.getActiveObjects().forEach(el => {
+        if (el.type !== 'i-text') return
+        el.fontWeight = val ? 'bold' : 'normal'
+      })
+      this.canvas.renderAll()
+    },
+    fontItalic(val) {
+      this.canvas.getActiveObjects().forEach(el => {
+        if (el.type !== 'i-text') return
+        el.fontStyle = val ? 'italic' : 'normal'
+      })
+      this.canvas.renderAll()
+    },
+    fontUnderline(val) {
+      this.canvas.getActiveObjects().forEach(el => {
+        if (el.type !== 'i-text') return
+        el.underline = val
+        el.dirty = true
       })
       this.canvas.renderAll()
     }
