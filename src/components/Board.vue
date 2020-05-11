@@ -51,6 +51,11 @@
     <button :class="['button', {'is-primary is-active': width == 8}]" @click="width = 8">width 8</button>
     <button :class="['button', {'is-primary is-active': width == 11}]" @click="width = 11">width 11</button>
   </div>
+  <div class="container buttons are-small">
+    <h2>Text style</h2>
+    <button :class="['button', {'is-primary is-active': font == 'Arial'}]" @click="font = 'Arial'">Font Arial</button>
+    <button :class="['button', {'is-primary is-active': font == 'Courier New'}]" @click="font = 'Courier New'">Font Courier New</button>
+  </div>
   <div class="container">
     <canvas ref="board" />
   </div>
@@ -76,6 +81,7 @@ export default {
     color: 'blue',
     fill: '',
     width: 2,
+    font: 'Arial'
   }),
   methods: {
     saveImage() {
@@ -183,7 +189,7 @@ export default {
     addText() {
       const id = firebase.database().ref(this.$props.refId).push().key
       const el = new fabric.IText('Text', {
-        id: id, stroke: this.color, fill: this.color, textBackgroundColor: this.fill, top: 50, left: 50
+        id: id, stroke: this.color, fill: this.color, fontFamily: this.font, textBackgroundColor: this.fill, top: 50, left: 50
       })
       const data = { data: el.toJSON(['id']) }
 
@@ -217,6 +223,7 @@ export default {
         this.fill = el.textBackgroundColor
         this.canvas.freeDrawingBrush.color = el.stroke
         this.width = ''
+        this.font = el.fontFamily
         return
       }
 
