@@ -112,10 +112,13 @@ export default {
       this.isActivePencil = false
       this.isActiveSelect = true
     },
+    getWidth() {
+      return this.width || 2
+    },
     addRect() {
       const id = firebase.database().ref(this.$props.refId).push().key
       const rect = new fabric.Rect({
-        id: id, fill: this.fill, stroke: this.color, strokeWidth: this.width, height: 40, width: 40, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
+        id: id, fill: this.fill, stroke: this.color, strokeWidth: this.getWidth(), height: 40, width: 40, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
       })
       const data = { data: rect.toJSON(['id']) }
 
@@ -126,7 +129,7 @@ export default {
     addCircle() {
       const id = firebase.database().ref(this.$props.refId).push().key
       const el = new fabric.Circle({
-        id: id, fill: this.fill, stroke: this.color, strokeWidth: this.width, radius: 20, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
+        id: id, fill: this.fill, stroke: this.color, strokeWidth: this.getWidth(), radius: 20, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
       })
       const data = { data: el.toJSON(['id']) }
 
@@ -137,7 +140,7 @@ export default {
     addTriangle() {
       const id = firebase.database().ref(this.$props.refId).push().key
       const rect = new fabric.Polygon([{x: 0, y: 0}, {x: -40, y: 60}, {x: 40, y: 60}], {
-        id: id, fill: this.fill, stroke: this.color, strokeWidth: this.width, height: 100, width: 100, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
+        id: id, fill: this.fill, stroke: this.color, strokeWidth: this.getWidth(), height: 100, width: 100, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
       })
       const data = { data: rect.toJSON(['id']) }
 
@@ -149,7 +152,7 @@ export default {
       const id = firebase.database().ref(this.$props.refId).push().key
       // Use a rectangle because fabric.Line() has issues...
       const rect = new fabric.Rect({
-        id: id, fill: this.color, typePatched: 'line', stroke: this.color, strokeWidth: this.width, height: 5, width: 200, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
+        id: id, fill: this.color, typePatched: 'line', stroke: this.color, strokeWidth: this.getWidth(), height: 5, width: 200, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
       })
       const data = { data: rect.toJSON(['id', 'typePatched']) }
 
@@ -161,7 +164,7 @@ export default {
       const id = firebase.database().ref(this.$props.refId).push().key
       const rect = new fabric.Polygon([{x:0, y:0}, {x:0, y:-10}, {x:80, y:-10}, {x:80, y:-20}, {x:100, y:-5}, {x:80, y:10},
       {x:80, y:0}], {
-        id: id, fill: this.fill, typePatched: 'line', stroke: this.color, strokeWidth: this.width, height: 100, width: 100, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
+        id: id, fill: this.fill, typePatched: 'line', stroke: this.color, strokeWidth: this.getWidth(), height: 100, width: 100, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
       })
       const data = { data: rect.toJSON(['id', 'typePatched']) }
 
@@ -185,7 +188,7 @@ export default {
       this.isActivePencil = true
       this.canvas.isDrawingMode = true
       this.canvas.freeDrawingBrush.color = this.color
-      this.canvas.freeDrawingBrush.width = this.width
+      this.canvas.freeDrawingBrush.width = this.getWidth()
     },
     clearCanvas() {
       this.canvas.remove(...this.canvas.getObjects())
@@ -201,12 +204,20 @@ export default {
     onElementSelected(element) {
       const el = element.target
 
+      if (el.type === 'i-text') {
+        this.color = el.stroke
+        this.fill = el.textBackgroundColor
+        this.canvas.freeDrawingBrush.color = el.stroke
+        this.width = ''
+        return
+      }
+
       if (el.hasOwnProperty('fill')) this.fill = el.fill
       if (el.hasOwnProperty('stroke')) {
         this.color = el.stroke
         this.canvas.freeDrawingBrush.color = el.stroke
       }
-      if (el.hasOwnProperty('strokeWidth') && el.type !== 'itext') {
+      if (el.hasOwnProperty('strokeWidth')) {
         this.width = el.strokeWidth
         this.canvas.freeDrawingBrush.width = el.strokeWidth
       }
@@ -217,19 +228,21 @@ export default {
       this.canvas.freeDrawingBrush.color = val
       this.canvas.getActiveObjects().forEach(el => {
         if (el.hasOwnProperty('stroke')) el.set('stroke', val)
+        if (el.type === 'i-text') el.set('fill', val)
       })
       this.canvas.renderAll()
     },
     fill(val) {
       this.canvas.getActiveObjects().forEach(el => {
-        if (el.hasOwnProperty('fill')) el.set('fill', val)
+        if (el.type === 'i-text') el.set('textBackgroundColor', val)
+        else if (el.hasOwnProperty('fill')) el.set('fill', val)
       })
       this.canvas.renderAll()
     },
     width(val) {
       this.canvas.freeDrawingBrush.width = val
       this.canvas.getActiveObjects().forEach(el => {
-        if (el.hasOwnProperty('strokeWidth') && el.type !== 'itext') el.set('strokeWidth', val)
+        if (el.hasOwnProperty('strokeWidth') && el.type !== 'i-text') el.set('strokeWidth', val)
       })
       this.canvas.renderAll()
     }
