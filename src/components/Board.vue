@@ -8,6 +8,13 @@
     <button class="button" @click="clearCanvas()">Clear</button>
   </div>
   <div class="container buttons are-small">
+    <h2>Background</h2>
+    <button :class="['button', {'is-primary is-active': this.bg == '#fff'}]" @click="bg = '#fff'">None</button>
+    <button :class="['button', {'is-primary is-active': this.bg == '#2b519b'}]" @click="bg = '#2b519b'">Blue</button>
+    <button :class="['button', {'is-primary is-active': this.bg == '#000'}]" @click="bg = '#000'">Black</button>
+    <button :class="['button', {'is-primary is-active': this.bg == 'grid'}]" @click="bg = 'grid'">Grid</button>
+  </div>
+  <div class="container buttons are-small">
     <h2>Shapes</h2>
     <button class="button" @click="addRect()">Add rectangle</button>
     <button class="button" @click="addCircle()">Add circle</button>
@@ -63,6 +70,7 @@ export default {
   data: () => ({
     title: 'Untitled',
     canvas: null,
+    bg: '#fff',
     isActivePencil: false,
     isActiveSelect: true,
     color: 'blue',
@@ -224,6 +232,14 @@ export default {
     }
   },
   watch: {
+    bg(val) {
+      if (val === 'grid') {
+        const dots = 'data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjI2IiB2aWV3Qm94PSIwIDAgMjYgMjYiIHdpZHRoPSIyNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIj48cmVjdCBmaWxsPSIjRkZGIiBoZWlnaHQ9IjI2IiB3aWR0aD0iMjYiLz48ZyBmaWxsPSIjREFEQURBIj48Y2lyY2xlIGN4PSIxMyIgY3k9IjEzIiByPSIxIi8+PGNpcmNsZSBjeD0iMjUiIGN5PSIxMyIgcj0iMSIvPjxjaXJjbGUgY3g9IjciIGN5PSIxMyIgcj0iMSIvPjxjaXJjbGUgY3g9IjEiIGN5PSIxMyIgcj0iMSIvPjxjaXJjbGUgY3g9IjE5IiBjeT0iMTMiIHI9IjEiLz48Y2lyY2xlIGN4PSIxMyIgY3k9IjE5IiByPSIxIi8+PGNpcmNsZSBjeD0iMjUiIGN5PSIxOSIgcj0iMSIvPjxjaXJjbGUgY3g9IjciIGN5PSIxOSIgcj0iMSIvPjxjaXJjbGUgY3g9IjEiIGN5PSIxOSIgcj0iMSIvPjxjaXJjbGUgY3g9IjE5IiBjeT0iMTkiIHI9IjEiLz48Y2lyY2xlIGN4PSIxMyIgY3k9IjI1IiByPSIxIi8+PGNpcmNsZSBjeD0iMjUiIGN5PSIyNSIgcj0iMSIvPjxjaXJjbGUgY3g9IjciIGN5PSIyNSIgcj0iMSIvPjxjaXJjbGUgY3g9IjEiIGN5PSIyNSIgcj0iMSIvPjxjaXJjbGUgY3g9IjE5IiBjeT0iMjUiIHI9IjEiLz48Y2lyY2xlIGN4PSIxMyIgY3k9IjciIHI9IjEiLz48Y2lyY2xlIGN4PSIyNSIgY3k9IjciIHI9IjEiLz48Y2lyY2xlIGN4PSI3IiBjeT0iNyIgcj0iMSIvPjxjaXJjbGUgY3g9IjEiIGN5PSI3IiByPSIxIi8+PGNpcmNsZSBjeD0iMTkiIGN5PSI3IiByPSIxIi8+PGNpcmNsZSBjeD0iMTMiIGN5PSIxIiByPSIxIi8+PGNpcmNsZSBjeD0iMjUiIGN5PSIxIiByPSIxIi8+PGNpcmNsZSBjeD0iNyIgY3k9IjEiIHI9IjEiLz48Y2lyY2xlIGN4PSIxIiBjeT0iMSIgcj0iMSIvPjxjaXJjbGUgY3g9IjE5IiBjeT0iMSIgcj0iMSIvPjwvZz48L2c+PC9zdmc+'
+        this.canvas.setBackgroundColor({source: dots, repeat: 'repeat'}, this.canvas.renderAll.bind(this.canvas))
+      } else {
+        this.canvas.setBackgroundColor(val, this.canvas.renderAll.bind(this.canvas))
+      }
+    },
     color(val) {
       this.canvas.freeDrawingBrush.color = val
       this.canvas.getActiveObjects().forEach(el => {
@@ -251,7 +267,7 @@ export default {
     const canvasRef = this.$refs.board
 
     this.canvas = new fabric.Canvas(canvasRef, {
-      height: 500, width: 900, backgroundColor: 'white', isDrawingMode: false
+      height: 500, width: 900, backgroundColor: this.bg, isDrawingMode: false
     })
 
     this.canvas.on('selection:cleared', options => { if (!options.hasOwnProperty('deselected')) return
