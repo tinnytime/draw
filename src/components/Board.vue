@@ -120,7 +120,7 @@ export default {
     updateElements(elements) {
       elements.forEach(el => {
         this.patchShape(el)
-        this.getFabricElementById(el.id).set(el)
+        this.getFabricElementsById(el.id).forEach(o => o.set(el))
       })
       this.canvas.renderAll()
     },
@@ -133,7 +133,7 @@ export default {
       })
     },
     removeElements(elements) {
-      elements.forEach(el => this.canvas.remove(...[this.getFabricElementById(el.id)]))
+      elements.forEach(el => this.canvas.remove(...this.getFabricElementsById(el.id)))
     },
     toggleSelect() {
       if (!this.isActiveSelect) this.canvas.discardActiveObject().renderAll()
@@ -226,8 +226,9 @@ export default {
       this.canvas.remove(...this.canvas.getActiveObjects())
       this.toggleSelect()
     },
-    getFabricElementById(id) {
-      return this.canvas.getObjects().filter((item) => { return item.id == id })[0]
+    getFabricElementsById(id) {
+      // Return array of multiple because free draw tool contains multiple objects
+      return this.canvas.getObjects().filter((item) => { return item.id == id })
     },
     onElementSelected(element) {
       const el = element.target
