@@ -37,9 +37,10 @@ const routes = [
     },
     beforeEnter: (to, from, next) => {
       const id = to.params.id.toUpperCase()
-      if (routeHelpers.isValidRoutePath(id)) return next()
+      const isValid = routeHelpers.isValidRoutePath(id)
+      if (isValid) return next()
 
-      next({ path: '/404' })
+      next({ path: '/404', query: {error: 'invalid-id'} })
     }
   }
 ]
