@@ -7,9 +7,6 @@
 import Board from '@/components/Board';
 
 export default {
-  props: {
-    id: String
-  },
   components: {
     Board
   }

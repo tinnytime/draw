@@ -1,6 +1,7 @@
 <template><div>
   <div class="container buttons are-small">
-    <button class="button" @click="saveImage()">Save</button>
+    <button class="button" @click="newBoard()">New</button>
+    <button class="button" @click="saveImage()">Export</button>
     <button :class="['button', {'is-primary is-active': isActiveSelect}]" @click="toggleSelect()">Select</button>
     <button class="button" @click="addText()">Add text</button>
     <button :class="['button', {'is-primary is-active': isActivePencil}]" @click="togglePencil()">Pencil</button>
@@ -61,6 +62,10 @@
     <button :class="['button', {'is-primary is-active': fontBold == true}]" @click="fontBold = !fontBold">Font Bold</button>
     <button :class="['button', {'is-primary is-active': fontUnderline == true}]" @click="fontUnderline = !fontUnderline">Font Underline</button>
   </div>
+  <div v-if="hasError()" class="container">
+    <h2>Error</h2>
+    <p>Bad URL: letters, numbers, and - (dash) only; Between 5 and 50 characters.</p>
+  </div>
   <div class="container">
     <canvas ref="board" />
   </div>
@@ -70,6 +75,7 @@
 
 import firebase, { db } from "@/firebaseinit"
 import { fabric } from '@/fabric'
+import { routeHelpers } from '@/router'
 
 export default {
   name: "board",
@@ -88,6 +94,12 @@ export default {
     fontUnderline: false,
   }),
   methods: {
+    hasError() {
+      return this.$route.query.error === 'invalid-url' ? 'url' : false
+    },
+    newBoard() {
+      routeHelpers.redirectToNewBoard()
+    },
     saveImage() {
       let link = document.createElement('a')
       link.setAttribute('download', this.title+'.png')
