@@ -28,8 +28,11 @@ firebase.initializeApp(_firebaseConfig);
 export const db = {
   refId() {
     if (!router.currentRoute.params.id) throw 'Error: ref not set!'
-    return ['drawings', router.currentRoute.params.id, 'elements'].join('/')
+    return ['/drawings', router.currentRoute.params.id, 'elements'].join('/')
   },
+	updateDrawingMeta(data) {
+		firebase.database().ref('/drawings/' + router.currentRoute.params.id).update(data)
+	},
   createNewElementKey() {
     return firebase.database().ref(this.refId()).push().key
   },

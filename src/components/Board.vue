@@ -263,6 +263,8 @@ export default {
       } else {
         this.canvas.setBackgroundColor(val, this.canvas.renderAll.bind(this.canvas))
       }
+
+      db.updateDrawingMeta({ bg: val })
     },
     color(val) {
       this.canvas.freeDrawingBrush.color = val
@@ -354,6 +356,9 @@ export default {
       db.updateElementById(options.target.id, data)
     })
 
+    firebase.database().ref('drawings/' + this.$route.params.id + '/bg').on('value', snapshot => {
+      if (snapshot.val()) this.bg = snapshot.val()
+    })
     firebase.database().ref(db.refId()).on('child_added', snapshot => {
       const { data } = snapshot.val()
       fabric.util.enlivenObjects([data], this.addElements)
