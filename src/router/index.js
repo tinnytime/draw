@@ -5,7 +5,7 @@ Vue.use(VueRouter)
 
 export const routeHelpers = {
   isValidRoutePath(path) {
-    return path.match(/^[a-zA-z0-9-]{5,50}$/)
+    return path.match(/^[A-Z0-9-]{5,50}$/)
   },
   redirectToNewBoard() {
     let result = ''
@@ -36,7 +36,9 @@ const routes = [
       return import('../views/Home.vue')
     },
     beforeEnter: (to, from, next) => {
-      const id = to.params.id.toUpperCase()
+      const id = to.params.id
+      if (id.match(/[a-z]/)) return next({ path: id.toUpperCase() })
+
       const isValid = routeHelpers.isValidRoutePath(id)
       if (isValid) return next()
 
