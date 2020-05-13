@@ -135,8 +135,14 @@ export default {
     removeElements(elements) {
       elements.forEach(el => this.canvas.remove(...this.getFabricElementsById(el.id)))
     },
-    toggleSelect() {
-      if (!this.isActiveSelect) this.canvas.discardActiveObject().renderAll()
+    toggleSelect(el = null) {
+      if (el) {
+        this.canvas.setActiveObject(el)
+        el.setCoords()
+      }
+      else this.canvas.discardActiveObject()
+
+      this.canvas.renderAll()
 
       this.canvas.isDrawingMode = false
       this.isActivePencil = false
@@ -147,13 +153,13 @@ export default {
     },
     addRect() {
       const id = db.createNewElementKey()
-      const rect = new fabric.Rect({
+      const el = new fabric.Rect({
         id: id, fill: this.fill, stroke: this.color, strokeWidth: this.getWidth(), height: 40, width: 40, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
       })
-      const data = { data: rect.toJSON(['id']) }
+      const data = { data: el.toJSON(['id']) }
 
       db.updateElementById(id, data)
-      this.toggleSelect()
+      this.toggleSelect(el)
     },
     addCircle() {
       const id = db.createNewElementKey()
@@ -163,40 +169,40 @@ export default {
       const data = { data: el.toJSON(['id']) }
 
       db.updateElementById(id, data)
-      this.toggleSelect()
+      this.toggleSelect(el)
     },
     addTriangle() {
       const id = db.createNewElementKey()
-      const rect = new fabric.Polygon(
+      const el = new fabric.Polygon(
         [ {x: 0, y: 0}, {x: -40, y: 60}, {x: 40, y: 60} ],
         { id: id, fill: this.fill, stroke: this.color, strokeWidth: this.getWidth(), height: 100, width: 100, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400) }
       )
-      const data = { data: rect.toJSON(['id']) }
+      const data = { data: el.toJSON(['id']) }
 
       db.updateElementById(id, data)
-      this.toggleSelect()
+      this.toggleSelect(el)
     },
     addLine() {
       const id = db.createNewElementKey()
       // Use a rectangle because fabric.Line() has issues...
-      const rect = new fabric.Rect({
+      const el = new fabric.Rect({
         id: id, fill: this.color, typePatched: 'line', stroke: this.color, strokeWidth: this.getWidth(), height: 5, width: 200, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
       })
-      const data = { data: rect.toJSON(['id', 'typePatched']) }
+      const data = { data: el.toJSON(['id', 'typePatched']) }
 
       db.updateElementById(id, data)
-      this.toggleSelect()
+      this.toggleSelect(el)
     },
     addArrow() {
       const id = db.createNewElementKey()
-      const rect = new fabric.Polygon(
+      const el = new fabric.Polygon(
         [ {x:0, y:0}, {x:0, y:-10}, {x:80, y:-10}, {x:80, y:-20}, {x:100, y:-5}, {x:80, y:10}, {x:80, y:0} ],
         { id: id, fill: this.fill, typePatched: 'line', stroke: this.color, strokeWidth: this.getWidth(), height: 100, width: 100, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400) }
       )
-      const data = { data: rect.toJSON(['id', 'typePatched']) }
+      const data = { data: el.toJSON(['id', 'typePatched']) }
 
       db.updateElementById(id, data)
-      this.toggleSelect()
+      this.toggleSelect(el)
     },
     addText() {
       const id = db.createNewElementKey()
@@ -209,7 +215,7 @@ export default {
       const data = { data: el.toJSON(['id']) }
 
       db.updateElementById(id, data)
-      this.toggleSelect()
+      this.toggleSelect(el)
     },
     togglePencil(e) {
       this.isActiveSelect = false
