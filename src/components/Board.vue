@@ -231,6 +231,10 @@ export default {
       return this.canvas.getObjects().filter((item) => { return item.id == id })
     },
     onElementSelected(element) {
+      if (element.hasOwnProperty('deselected')) {
+        element.deselected.forEach(el => this.canvas.trigger('object:modified', {target: el}))
+      }
+
       const el = element.target
 
       if (el.type === 'i-text') {
