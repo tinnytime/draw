@@ -1,67 +1,130 @@
 <template><div>
-  <div class="container buttons are-small">
-    <button class="button" @click="newBoard()">New</button>
-    <button class="button" @click="saveImage()">Export</button>
-    <button :class="['button', {'is-primary is-active': isActiveSelect}]" @click="toggleSelect()">Select</button>
-    <button class="button" @click="addText()">Add text</button>
-    <button :class="['button', {'is-primary is-active': isActivePencil}]" @click="togglePencil()">Pencil</button>
-    <button class="button" @click="deleteSelected()">Delete selected</button>
-    <button class="button" @click="clearCanvas()">Clear</button>
+  <div class="container buttons">
+    <button class="button" @click="newBoard()">New
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon icon-new"><path d="M 25 2 C 12.309295 2 2 12.309295 2 25 C 2 37.690705 12.309295 48 25 48 C 37.690705 48 48 37.690705 48 25 C 48 12.309295 37.690705 2 25 2 z M 25 4 C 36.609824 4 46 13.390176 46 25 C 46 36.609824 36.609824 46 25 46 C 13.390176 46 4 36.609824 4 25 C 4 13.390176 13.390176 4 25 4 z M 24 13 L 24 24 L 13 24 L 13 26 L 24 26 L 24 37 L 26 37 L 26 26 L 37 26 L 37 24 L 26 24 L 26 13 L 24 13 z"></path></svg>
+    </button>
+    <button class="button" @click="saveImage()">Export
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon icon-export"><path d="M 0.78125 -0.03125 C 0.300781 0.078125 -0.0390625 0.507813 -0.03125 1 L -0.03125 49 C -0.0273438 49.566406 0.433594 50.027344 1 50.03125 L 31 50.03125 C 31.566406 50.027344 32.027344 49.566406 32.03125 49 L 32.03125 39 L 29.96875 39 L 29.96875 47.96875 L 2.03125 47.96875 L 2.03125 2.03125 L 29.96875 2.03125 L 29.96875 11 L 32.03125 11 L 32.03125 1 C 32.027344 0.433594 31.566406 -0.0273438 31 -0.03125 L 1 -0.03125 C 0.925781 -0.0390625 0.855469 -0.0390625 0.78125 -0.03125 Z M 38.90625 15.09375 C 38.53125 15.160156 38.230469 15.433594 38.125 15.796875 C 38.019531 16.164063 38.128906 16.554688 38.40625 16.8125 L 45.5625 24 L 16 24 C 15.96875 24 15.9375 24 15.90625 24 C 15.355469 24.027344 14.925781 24.496094 14.953125 25.046875 C 14.980469 25.597656 15.449219 26.027344 16 26 L 45.5625 26 L 38.40625 33.1875 C 38.109375 33.429688 37.972656 33.816406 38.058594 34.191406 C 38.144531 34.5625 38.4375 34.855469 38.808594 34.941406 C 39.183594 35.027344 39.570313 34.890625 39.8125 34.59375 L 48.71875 25.71875 L 49.40625 25 L 48.71875 24.28125 L 39.8125 15.40625 C 39.605469 15.183594 39.304688 15.070313 39 15.09375 C 38.96875 15.09375 38.9375 15.09375 38.90625 15.09375 Z"></path></svg>
+    </button>
+    <button :class="['button', {'is-active': isActiveSelect}]" @click="toggleSelect()">Select
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon icon-select"><path d="M 17 3 C 16.0625 3 15.117188 3.3125 14.34375 3.96875 C 13.570313 4.625 13 5.675781 13 6.90625 L 13 28.4375 C 12.558594 28.597656 12.15625 28.644531 11.34375 29.34375 C 10.167969 30.359375 9 32.183594 9 34.90625 C 9 36.878906 9.785156 38.683594 10.09375 39.40625 C 10.09375 39.417969 10.09375 39.425781 10.09375 39.4375 L 12.90625 45.03125 C 12.910156 45.039063 12.902344 45.054688 12.90625 45.0625 C 14.382813 48.105469 17.539063 50 20.90625 50 L 30 50 C 34.945313 50 39 45.945313 39 41 L 39 25 C 39 24.179688 38.871094 23.050781 38.3125 22 C 37.753906 20.949219 36.597656 20 35 20 C 33.90625 20 33.09375 20.375 32.4375 20.875 C 32.328125 20.574219 32.273438 20.238281 32.125 19.96875 C 31.503906 18.847656 30.367188 18 29 18 C 27.882813 18 27.007813 18.40625 26.34375 18.96875 C 25.679688 17.871094 24.558594 17 23 17 C 22.21875 17 21.574219 17.246094 21 17.59375 L 21 7 C 21 5.734375 20.460938 4.675781 19.6875 4 C 18.914063 3.324219 17.9375 3 17 3 Z M 17 5 C 17.460938 5 18 5.175781 18.375 5.5 C 18.75 5.824219 19 6.265625 19 7 L 19 23 L 21 23 L 21 21 C 21 20.125 21.660156 19 23 19 C 24.339844 19 25 20.125 25 21 L 25 22 C 25.007813 22.546875 25.453125 22.984375 26 22.984375 C 26.546875 22.984375 26.992188 22.546875 27 22 C 27 21.464844 27.132813 20.933594 27.40625 20.59375 C 27.679688 20.253906 28.082031 20 29 20 C 29.632813 20 29.996094 20.257813 30.375 20.9375 C 30.753906 21.617188 31 22.71875 31 24 L 33 24 C 33 23.417969 33.105469 22.910156 33.34375 22.59375 C 33.582031 22.277344 33.964844 22 35 22 C 35.902344 22 36.246094 22.339844 36.5625 22.9375 C 36.878906 23.535156 37 24.417969 37 25 L 37 41 C 37 44.855469 33.855469 48 30 48 L 20.90625 48 C 18.285156 48 15.816406 46.5 14.6875 44.15625 L 11.90625 38.59375 C 11.902344 38.585938 11.910156 38.570313 11.90625 38.5625 C 11.613281 37.875 11 36.320313 11 34.90625 C 11 32.726563 11.832031 31.585938 12.65625 30.875 C 13.480469 30.164063 14.25 29.96875 14.25 29.96875 C 14.691406 29.855469 15 29.457031 15 29 L 15 6.90625 C 15 6.238281 15.25 5.820313 15.625 5.5 C 16 5.179688 16.539063 5 17 5 Z M 21.90625 29.96875 C 21.863281 29.976563 21.820313 29.988281 21.78125 30 C 21.316406 30.105469 20.988281 30.523438 21 31 L 21 40 C 20.996094 40.359375 21.183594 40.695313 21.496094 40.878906 C 21.808594 41.058594 22.191406 41.058594 22.503906 40.878906 C 22.816406 40.695313 23.003906 40.359375 23 40 L 23 31 C 23.011719 30.710938 22.894531 30.433594 22.6875 30.238281 C 22.476563 30.039063 22.191406 29.941406 21.90625 29.96875 Z M 26.90625 29.96875 C 26.863281 29.976563 26.820313 29.988281 26.78125 30 C 26.316406 30.105469 25.988281 30.523438 26 31 L 26 40 C 25.996094 40.359375 26.183594 40.695313 26.496094 40.878906 C 26.808594 41.058594 27.191406 41.058594 27.503906 40.878906 C 27.816406 40.695313 28.003906 40.359375 28 40 L 28 31 C 28.011719 30.710938 27.894531 30.433594 27.6875 30.238281 C 27.476563 30.039063 27.191406 29.941406 26.90625 29.96875 Z M 31.90625 29.96875 C 31.863281 29.976563 31.820313 29.988281 31.78125 30 C 31.316406 30.105469 30.988281 30.523438 31 31 L 31 40 C 30.996094 40.359375 31.183594 40.695313 31.496094 40.878906 C 31.808594 41.058594 32.191406 41.058594 32.503906 40.878906 C 32.816406 40.695313 33.003906 40.359375 33 40 L 33 31 C 33.011719 30.710938 32.894531 30.433594 32.6875 30.238281 C 32.476563 30.039063 32.191406 29.941406 31.90625 29.96875 Z"></path></svg>
+    </button>
+    <button class="button" @click="addText()">Text
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon icon-text"><path fill="none" stroke="#000" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" d="M39,7H11 c-0.552,0-1,0.448-1,1v6c0,0.552,0.448,1,1,1h2c0.552,0,1-0.448,1-1v-3h9v28h-3c-0.552,0-1,0.448-1,1v2c0,0.552,0.448,1,1,1h10  c0.552,0,1-0.448,1-1v-2c0-0.552-0.448-1-1-1h-3V11h9v3c0,0.552,0.448,1,1,1h2c0.552,0,1-0.448,1-1V8C40,7.448,39.552,7,39,7z"></path></svg>
+    </button>
+    <button :class="['button', {'is-active': isActivePencil}]" @click="togglePencil()">Pencil
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon icon-pencil"><path d="M 42.90625 2.90625 C 41.851563 2.90625 40.796875 3.296875 40 4.09375 L 39.15625 4.90625 C 38.953125 4.800781 38.722656 4.769531 38.5 4.8125 C 38.308594 4.855469 38.136719 4.953125 38 5.09375 L 6.59375 36.5 C 6.496094 36.597656 6.421875 36.714844 6.375 36.84375 L 3.0625 45.65625 C 2.929688 46.019531 3.019531 46.429688 3.296875 46.703125 C 3.570313 46.980469 3.980469 47.070313 4.34375 46.9375 L 13.15625 43.625 C 13.285156 43.578125 13.402344 43.503906 13.5 43.40625 L 44.90625 12 C 45.242188 11.652344 45.285156 11.113281 45 10.71875 L 45.8125 9.90625 C 47.40625 8.3125 47.40625 5.6875 45.8125 4.09375 C 45.015625 3.296875 43.960938 2.90625 42.90625 2.90625 Z M 42.90625 4.90625 C 43.453125 4.90625 44.003906 5.097656 44.40625 5.5 C 45.214844 6.308594 45.214844 7.691406 44.40625 8.5 L 43.625 9.3125 L 40.625 6.3125 L 41.40625 5.5 C 41.808594 5.097656 42.359375 4.90625 42.90625 4.90625 Z M 38.6875 7.1875 L 42.8125 11.3125 L 40.0625 14.03125 L 35.96875 9.9375 Z M 34.53125 11.34375 L 38.65625 15.46875 L 12.75 41.34375 L 12 40.5625 L 12 39 C 12 38.449219 11.550781 38 11 38 L 9.4375 38 L 8.65625 37.25 Z M 7.65625 39.09375 L 8.28125 39.71875 C 8.472656 39.90625 8.734375 40.007813 9 40 L 10 40 L 10 41 C 9.992188 41.265625 10.09375 41.527344 10.28125 41.71875 L 10.90625 42.34375 L 7.09375 43.78125 L 6.21875 42.90625 Z"></path></svg>
+    </button>
+    <button class="button" @click="addRect()">Rectangle
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="icon"><path fill="#000" d="M28,5v20H2V5H28 M29,4H1v22h28V4L29,4z"></path></svg>
+    </button>
+    <button class="button" @click="addCircle()">Circle
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon"><path d="M 25 2 C 12.309295 2 2 12.309295 2 25 C 2 37.690705 12.309295 48 25 48 C 37.690705 48 48 37.690705 48 25 C 48 12.309295 37.690705 2 25 2 z M 25 4 C 36.609824 4 46 13.390176 46 25 C 46 36.609824 36.609824 46 25 46 C 13.390176 46 4 36.609824 4 25 C 4 13.390176 13.390176 4 25 4 z"></path></svg>
+    </button>
+    <button class="button" @click="addTriangle()">Triangle
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon"><path d="M 25 7 C 23.894531 7 23 7.894531 23 9 C 23 9.351563 23.09375 9.683594 23.25 9.96875 L 5.09375 39 C 5.0625 39 5.03125 39 5 39 C 3.894531 39 3 39.894531 3 41 C 3 42.105469 3.894531 43 5 43 C 5.753906 43 6.410156 42.585938 6.75 41.96875 L 43.25 41.96875 C 43.589844 42.585938 44.246094 43 45 43 C 46.105469 43 47 42.105469 47 41 C 47 39.894531 46.105469 39 45 39 C 44.96875 39 44.9375 39 44.90625 39 L 26.75 9.96875 C 26.90625 9.683594 27 9.351563 27 9 C 27 7.894531 26.105469 7 25 7 Z M 24.90625 11 C 24.9375 11 24.96875 11 25 11 C 25.03125 11 25.0625 11 25.09375 11 L 43.25 40.03125 L 6.75 40.03125 Z"></path></svg>
+    </button>
+    <button class="button" @click="addLine()">Line
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon"><path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="2.613" stroke-width="2" d="M47 3L3 47"></path></svg>
+    </button>
+    <button class="button" @click="addArrow()">Arrow
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon"><path d="M 27.84375 11 C 27.351563 11.078125 26.992188 11.503906 27 12 L 27 20 L 5 20 C 4.449219 20 4 20.449219 4 21 L 4 29 C 4 29.550781 4.449219 30 5 30 L 27 30 L 27 38 C 27.007813 38.375 27.222656 38.710938 27.558594 38.875 C 27.894531 39.039063 28.292969 39.003906 28.59375 38.78125 L 45.59375 25.78125 C 45.832031 25.589844 45.96875 25.304688 45.96875 25 C 45.96875 24.695313 45.832031 24.410156 45.59375 24.21875 L 28.59375 11.21875 C 28.382813 11.046875 28.113281 10.96875 27.84375 11 Z M 29 14 L 43.375 25 L 29 36 L 29 29 C 29 28.449219 28.550781 28 28 28 L 6 28 L 6 22 L 28 22 C 28.550781 22 29 21.550781 29 21 Z"></path></svg>
+    </button>
+    <button class="button" @click="deleteSelected()">Delete
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon icon-delete"><path d="M 6 3 A 1.0001 1.0001 0 0 0 5.1679688 4.5546875 L 18.798828 25 L 5.1679688 45.445312 A 1.0001 1.0001 0 0 0 6 47 L 14.558594 47 A 1.0001 1.0001 0 0 0 15.378906 46.572266 L 25 32.75 L 34.621094 46.572266 A 1.0001 1.0001 0 0 0 35.441406 47 L 44 47 A 1.0001 1.0001 0 0 0 44.832031 45.445312 L 31.201172 25 L 44.832031 4.5546875 A 1.0001 1.0001 0 0 0 44 3 L 35.441406 3 A 1.0001 1.0001 0 0 0 34.621094 3.4277344 L 25 17.25 L 15.378906 3.4277344 A 1.0001 1.0001 0 0 0 14.558594 3 L 6 3 z M 7.8691406 5 L 14.035156 5 L 24.179688 19.572266 A 1.0001 1.0001 0 0 0 25.820312 19.572266 L 35.964844 5 L 42.130859 5 L 29.167969 24.445312 A 1.0001 1.0001 0 0 0 29.167969 25.554688 L 42.130859 45 L 35.964844 45 L 25.820312 30.427734 A 1.0001 1.0001 0 0 0 24.179688 30.427734 L 14.035156 45 L 7.8691406 45 L 20.832031 25.554688 A 1.0001 1.0001 0 0 0 20.832031 24.445312 L 7.8691406 5 z"></path></svg>
+    </button>
   </div>
-  <div class="container buttons are-small">
+  <div class="container buttons">
+    <button :class="['button', {'is-active': width == 2}]" @click="width = 2">Thin
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon"><circle cx="5" cy="5" r="5"/></svg>
+    </button>
+    <button :class="['button', {'is-active': width == 8}]" @click="width = 8">Normal
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon"><circle cx="9" cy="9" r="9"/></svg>
+    </button>
+    <button :class="['button', {'is-active': width == 14}]" @click="width = 14">Medium
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon"><circle cx="22" cy="22" r="22"/></svg>
+    </button>
+    <button :class="['button', {'is-active': width == 20}]" @click="width = 20">Thick
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon"><circle cx="30" cy="30" r="30"/></svg>
+    </button>
+    <button :class="['button font-arial', {'is-active': fontFamily == 'Arial'}]" @click="fontFamily = 'Arial'">Arial</button>
+    <button :class="['button font-courier-new', {'is-active': fontFamily == 'Courier New'}]" @click="fontFamily = 'Courier New'">Courier New</button>
+    <button :class="['button font-lucida-console', {'is-active': fontFamily == 'Lucida Console'}]" @click="fontFamily = 'Lucida Console'">Lucida Console</button>
+    <button :class="['button font-comic-sans', {'is-active': fontFamily == 'Comic Sans MS'}]" @click="fontFamily = 'Comic Sans MS'">Comic Sans</button>
+    <button :class="['button font-italic', {'is-active': fontItalic == true}]" @click="fontItalic = !fontItalic">Italic</button>
+    <button :class="['button font-bold', {'is-active': fontBold == true}]" @click="fontBold = !fontBold">Bold</button>
+    <button :class="['button font-underline', {'is-active': fontUnderline == true}]" @click="fontUnderline = !fontUnderline">Underline</button>
+  </div>
+  <div class="container buttons">
     <h2>Background</h2>
-    <button :class="['button', {'is-primary is-active': this.bg == '#fff'}]" @click="bg = '#fff'">None</button>
-    <button :class="['button', {'is-primary is-active': this.bg == '#2b519b'}]" @click="bg = '#2b519b'">Blue</button>
-    <button :class="['button', {'is-primary is-active': this.bg == '#000'}]" @click="bg = '#000'">Black</button>
-    <button :class="['button', {'is-primary is-active': this.bg == 'grid'}]" @click="bg = 'grid'">Grid</button>
+    <button :class="['button', {'is-active': this.bg == '#fff'}]" @click="bg = '#fff'">None
+      <svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg"><rect width="220" height="150" fill="white" /></svg>
+    </button>
+    <button :class="['button', {'is-active': this.bg == '#2b519b'}]" @click="bg = '#2b519b'">Blue
+      <svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg"><rect width="220" height="150" fill="blue" /></svg>
+    </button>
+    <button :class="['button', {'is-active': this.bg == '#000'}]" @click="bg = '#000'">Black
+      <svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg"><rect width="220" height="150" fill="black" /></svg>
+    </button>
+    <button :class="['button', {'is-active': this.bg == 'grid'}]" @click="bg = 'grid'">Grid
+      <svg height="26" viewBox="0 0 26 26" width="26" xmlns="http://www.w3.org/2000/svg" class="icon"><g fill="none"><rect fill="#FFF" height="26" width="26"/><g fill="#DADADA"><circle cx="13" cy="13" r="1"/><circle cx="25" cy="13" r="1"/><circle cx="7" cy="13" r="1"/><circle cx="1" cy="13" r="1"/><circle cx="19" cy="13" r="1"/><circle cx="13" cy="19" r="1"/><circle cx="25" cy="19" r="1"/><circle cx="7" cy="19" r="1"/><circle cx="1" cy="19" r="1"/><circle cx="19" cy="19" r="1"/><circle cx="13" cy="25" r="1"/><circle cx="25" cy="25" r="1"/><circle cx="7" cy="25" r="1"/><circle cx="1" cy="25" r="1"/><circle cx="19" cy="25" r="1"/><circle cx="13" cy="7" r="1"/><circle cx="25" cy="7" r="1"/><circle cx="7" cy="7" r="1"/><circle cx="1" cy="7" r="1"/><circle cx="19" cy="7" r="1"/><circle cx="13" cy="1" r="1"/><circle cx="25" cy="1" r="1"/><circle cx="7" cy="1" r="1"/><circle cx="1" cy="1" r="1"/><circle cx="19" cy="1" r="1"/></g></g></svg>
+    </button>
   </div>
-  <div class="container buttons are-small">
-    <h2>Shapes</h2>
-    <button class="button" @click="addRect()">Add rectangle</button>
-    <button class="button" @click="addCircle()">Add circle</button>
-    <button class="button" @click="addTriangle()">Add triangle</button>
-    <button class="button" @click="addLine()">Add line</button>
-    <button class="button" @click="addArrow()">Add arrow</button>
-  </div>
-  <div class="container buttons are-small">
+  <div class="container button-colours">
     <h2>Colour</h2>
-    <button :class="['button', {'is-primary is-active': this.color == 'red'}]" @click="color = 'red'">Red</button>
-    <button :class="['button', {'is-primary is-active': this.color == 'green'}]" @click="color = 'green'">Green</button>
-    <button :class="['button', {'is-primary is-active': this.color == 'blue'}]" @click="color = 'blue'">Blue</button>
-    <button :class="['button', {'is-primary is-active': this.color == 'yellow'}]" @click="color = 'yellow'">Yellow</button>
-    <button :class="['button', {'is-primary is-active': this.color == 'pink'}]" @click="color = 'pink'">Pink</button>
-    <button :class="['button', {'is-primary is-active': this.color == 'white'}]" @click="color = 'white'">White</button>
-    <button :class="['button', {'is-primary is-active': this.color == 'black'}]" @click="color = 'black'">Black</button>
-    <button :class="['button', {'is-primary is-active': this.color == ''}]" @click="color = ''">None</button>
+    <button :class="['button', {'is-active': this.color == 'red'}]" @click="color = 'red'">Red
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="red" cx="45" cy="45" r="45"/></svg>
+    </button>
+    <button :class="['button', {'is-active': this.color == 'green'}]" @click="color = 'green'">Green
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="green" cx="45" cy="45" r="45"/></svg>
+    </button>
+    <button :class="['button', {'is-active': this.color == 'blue'}]" @click="color = 'blue'">Blue
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="blue" cx="45" cy="45" r="45"/></svg>
+    </button>
+    <button :class="['button', {'is-active': this.color == 'yellow'}]" @click="color = 'yellow'">Yellow
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="yellow" cx="45" cy="45" r="45"/></svg>
+    </button>
+    <button :class="['button', {'is-active': this.color == 'pink'}]" @click="color = 'pink'">Pink
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="pink" cx="45" cy="45" r="45"/></svg>
+    </button>
+    <button :class="['button', {'is-active': this.color == 'white'}]" @click="color = 'white'">White
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="white" cx="45" cy="45" r="45"/></svg>
+    </button>
+    <button :class="['button', {'is-active': this.color == 'black'}]" @click="color = 'black'">Black
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="black" cx="45" cy="45" r="45"/></svg>
+    </button>
+    <button :class="['button', {'is-active': this.color == ''}]" @click="color = ''">None
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon icon-none"><path d="M 25 2 C 12.309534 2 2 12.309534 2 25 C 2 37.690466 12.309534 48 25 48 C 37.690466 48 48 37.690466 48 25 C 48 12.309534 37.690466 2 25 2 z M 25 4 C 36.609534 4 46 13.390466 46 25 C 46 36.609534 36.609534 46 25 46 C 13.390466 46 4 36.609534 4 25 C 4 13.390466 13.390466 4 25 4 z M 32.990234 15.986328 A 1.0001 1.0001 0 0 0 32.292969 16.292969 L 25 23.585938 L 17.707031 16.292969 A 1.0001 1.0001 0 0 0 16.990234 15.990234 A 1.0001 1.0001 0 0 0 16.292969 17.707031 L 23.585938 25 L 16.292969 32.292969 A 1.0001 1.0001 0 1 0 17.707031 33.707031 L 25 26.414062 L 32.292969 33.707031 A 1.0001 1.0001 0 1 0 33.707031 32.292969 L 26.414062 25 L 33.707031 17.707031 A 1.0001 1.0001 0 0 0 32.990234 15.986328 z"></path></svg>
+    </button>
   </div>
-  <div class="container buttons are-small">
+  <div class="container button-colours">
     <h2>Fill</h2>
-    <button :class="['button', {'is-primary is-active': this.fill == 'red'}]" @click="fill = 'red'">Red</button>
-    <button :class="['button', {'is-primary is-active': this.fill == 'green'}]" @click="fill = 'green'">Green</button>
-    <button :class="['button', {'is-primary is-active': this.fill == 'blue'}]" @click="fill = 'blue'">Blue</button>
-    <button :class="['button', {'is-primary is-active': this.fill == 'yellow'}]" @click="fill = 'yellow'">Yellow</button>
-    <button :class="['button', {'is-primary is-active': this.fill == 'pink'}]" @click="fill = 'pink'">Pink</button>
-    <button :class="['button', {'is-primary is-active': this.fill == 'white'}]" @click="fill = 'white'">White</button>
-    <button :class="['button', {'is-primary is-active': this.fill == 'black'}]" @click="fill = 'black'">Black</button>
-    <button :class="['button', {'is-primary is-active': this.fill == ''}]" @click="fill = ''">None</button>
+    <button :class="['button', {'is-active': this.fill == 'red'}]" @click="fill = 'red'">Red
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="red" cx="45" cy="45" r="45"/></svg>
+    </button>
+    <button :class="['button', {'is-active': this.fill == 'green'}]" @click="fill = 'green'">Green
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="green" cx="45" cy="45" r="45"/></svg>
+    </button>
+    <button :class="['button', {'is-active': this.fill == 'blue'}]" @click="fill = 'blue'">Blue
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="blue" cx="45" cy="45" r="45"/></svg>
+    </button>
+    <button :class="['button', {'is-active': this.fill == 'yellow'}]" @click="fill = 'yellow'">Yellow
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="yellow" cx="45" cy="45" r="45"/></svg>
+    </button>
+    <button :class="['button', {'is-active': this.fill == 'pink'}]" @click="fill = 'pink'">Pink
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="pink" cx="45" cy="45" r="45"/></svg>
+    </button>
+    <button :class="['button', {'is-active': this.fill == 'white'}]" @click="fill = 'white'">White
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="white" cx="45" cy="45" r="45"/></svg>
+    </button>
+    <button :class="['button', {'is-active': this.fill == 'black'}]" @click="fill = 'black'">Black
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="black" cx="45" cy="45" r="45"/></svg>
+    </button>
+    <button :class="['button', {'is-active': this.fill == ''}]" @click="fill = ''">None
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon icon-none"><path d="M 25 2 C 12.309534 2 2 12.309534 2 25 C 2 37.690466 12.309534 48 25 48 C 37.690466 48 48 37.690466 48 25 C 48 12.309534 37.690466 2 25 2 z M 25 4 C 36.609534 4 46 13.390466 46 25 C 46 36.609534 36.609534 46 25 46 C 13.390466 46 4 36.609534 4 25 C 4 13.390466 13.390466 4 25 4 z M 32.990234 15.986328 A 1.0001 1.0001 0 0 0 32.292969 16.292969 L 25 23.585938 L 17.707031 16.292969 A 1.0001 1.0001 0 0 0 16.990234 15.990234 A 1.0001 1.0001 0 0 0 16.292969 17.707031 L 23.585938 25 L 16.292969 32.292969 A 1.0001 1.0001 0 1 0 17.707031 33.707031 L 25 26.414062 L 32.292969 33.707031 A 1.0001 1.0001 0 1 0 33.707031 32.292969 L 26.414062 25 L 33.707031 17.707031 A 1.0001 1.0001 0 0 0 32.990234 15.986328 z"></path></svg>
+    </button>
   </div>
-  <div class="container buttons are-small">
-    <h2>Shape style</h2>
-    <button :class="['button', {'is-primary is-active': width == 2}]" @click="width = 2">width 2</button>
-    <button :class="['button', {'is-primary is-active': width == 5}]" @click="width = 5">width 5</button>
-    <button :class="['button', {'is-primary is-active': width == 8}]" @click="width = 8">width 8</button>
-    <button :class="['button', {'is-primary is-active': width == 11}]" @click="width = 11">width 11</button>
-  </div>
-  <div class="container buttons are-small">
-    <h2>Text style</h2>
-    <button :class="['button', {'is-primary is-active': fontFamily == 'Arial'}]" @click="fontFamily = 'Arial'">Font Arial</button>
-    <button :class="['button', {'is-primary is-active': fontFamily == 'Courier New'}]" @click="fontFamily = 'Courier New'">Font Courier New</button>
-    <button :class="['button', {'is-primary is-active': fontFamily == 'Lucida Console'}]" @click="fontFamily = 'Lucida Console'">Font Lucida Console</button>
-    <button :class="['button', {'is-primary is-active': fontFamily == 'Comic Sans MS'}]" @click="fontFamily = 'Comic Sans MS'">Font Comic Sans</button>
-    <button :class="['button', {'is-primary is-active': fontItalic == true}]" @click="fontItalic = !fontItalic">Font Italic</button>
-    <button :class="['button', {'is-primary is-active': fontBold == true}]" @click="fontBold = !fontBold">Font Bold</button>
-    <button :class="['button', {'is-primary is-active': fontUnderline == true}]" @click="fontUnderline = !fontUnderline">Font Underline</button>
-  </div>
+
   <div v-if="hasError()" class="container">
     <h2>Error</h2>
     <p>Bad URL: letters, numbers, and - (dash) only; Between 5 and 50 characters.</p>
@@ -385,3 +448,38 @@ export default {
   }
 };
 </script>
+
+
+<style>
+.button {padding: 0; width: 45px; height: 55px; margin-right: 5px}
+/*.button-colours button {padding: 10px; border-radius: 27px; border-radius: 27px; width: 45px; height: 45px}*/
+
+.red {background-color: red}
+.green  {background-color: green}
+.blue  {background-color: blue}
+.yellow  {background-color: yellow}
+.pink  {background-color: pink}
+.white  {background-color: white}
+.black  {background-color: black}
+.none  {background-color: none}
+
+.icon {}
+.icon-color {}
+.icon-none {}
+.icon-pencil {}
+.icon-text {}
+.icon-width2 {width: 2px}
+.icon-width8 {width: 8px}
+.icon-width14 {width: 14px}
+.icon-width20 {width: 20px}
+
+.font-arial {font-family: Arial}
+.font-courier-new {font-family: 'Courier New'}
+.font-lucida-console {font-family: 'Lucida Console'}
+.font-comic-sans {font-family: 'Comis Sans'}
+.font-italic {font-style: italic}
+.font-bold {font-weight: bold}
+.font-underline {text-decoration: underline}
+
+.divider {width: 20px; display: inline-block}
+</style>
