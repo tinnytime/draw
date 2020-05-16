@@ -207,7 +207,7 @@ export default {
 
       this.canvas.isDrawingMode = false
       this.isActivePencil = false
-      this.isActiveSelect = true
+      this.isActiveSelect = !this.isActiveSelect
     },
     getWidth() {
       return this.width || 2
@@ -280,10 +280,15 @@ export default {
     },
     togglePencil(e) {
       this.isActiveSelect = false
-      this.isActivePencil = true
-      this.canvas.isDrawingMode = true
-      this.canvas.freeDrawingBrush.color = this.color
-      this.canvas.freeDrawingBrush.width = this.getWidth()
+      this.isActivePencil = !this.isActivePencil
+      this.canvas.isDrawingMode = !this.canvas.isDrawingMode
+
+      if (this.canvas.isDrawingMode) {
+        if (!this.color) this.color = 'black'
+        if (!this.width) this.width = 8
+        this.canvas.freeDrawingBrush.color = this.color
+        this.canvas.freeDrawingBrush.width = this.getWidth()
+      }
     },
     clearCanvas() {
       this.canvas.remove(...this.canvas.getObjects())
