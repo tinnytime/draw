@@ -1,5 +1,6 @@
-<template><div>
-  <div class="container buttons">
+<template><div class="wrapper">
+<div class="board-buttons">
+  <div class="row row1">
     <button class="button" @click="newBoard()">New
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon icon-new"><path d="M 25 2 C 12.309295 2 2 12.309295 2 25 C 2 37.690705 12.309295 48 25 48 C 37.690705 48 48 37.690705 48 25 C 48 12.309295 37.690705 2 25 2 z M 25 4 C 36.609824 4 46 13.390176 46 25 C 46 36.609824 36.609824 46 25 46 C 13.390176 46 4 36.609824 4 25 C 4 13.390176 13.390176 4 25 4 z M 24 13 L 24 24 L 13 24 L 13 26 L 24 26 L 24 37 L 26 37 L 26 26 L 37 26 L 37 24 L 26 24 L 26 13 L 24 13 z"></path></svg>
     </button>
@@ -33,8 +34,7 @@
     <button class="button" @click="deleteSelected()">Delete
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon icon-delete"><path d="M 6 3 A 1.0001 1.0001 0 0 0 5.1679688 4.5546875 L 18.798828 25 L 5.1679688 45.445312 A 1.0001 1.0001 0 0 0 6 47 L 14.558594 47 A 1.0001 1.0001 0 0 0 15.378906 46.572266 L 25 32.75 L 34.621094 46.572266 A 1.0001 1.0001 0 0 0 35.441406 47 L 44 47 A 1.0001 1.0001 0 0 0 44.832031 45.445312 L 31.201172 25 L 44.832031 4.5546875 A 1.0001 1.0001 0 0 0 44 3 L 35.441406 3 A 1.0001 1.0001 0 0 0 34.621094 3.4277344 L 25 17.25 L 15.378906 3.4277344 A 1.0001 1.0001 0 0 0 14.558594 3 L 6 3 z M 7.8691406 5 L 14.035156 5 L 24.179688 19.572266 A 1.0001 1.0001 0 0 0 25.820312 19.572266 L 35.964844 5 L 42.130859 5 L 29.167969 24.445312 A 1.0001 1.0001 0 0 0 29.167969 25.554688 L 42.130859 45 L 35.964844 45 L 25.820312 30.427734 A 1.0001 1.0001 0 0 0 24.179688 30.427734 L 14.035156 45 L 7.8691406 45 L 20.832031 25.554688 A 1.0001 1.0001 0 0 0 20.832031 24.445312 L 7.8691406 5 z"></path></svg>
     </button>
-  </div>
-  <div class="container buttons">
+
     <button :class="['button', {'is-active': width == 2}]" @click="width = 2">Thin
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon"><circle cx="5" cy="5" r="5"/></svg>
     </button>
@@ -55,8 +55,9 @@
     <button :class="['button font-bold', {'is-active': fontBold == true}]" @click="fontBold = !fontBold">Bold</button>
     <button :class="['button font-underline', {'is-active': fontUnderline == true}]" @click="fontUnderline = !fontUnderline">Underline</button>
   </div>
-  <div class="container buttons">
-    <h2>Background</h2>
+
+  <div class="row row2">
+    <span>Background</span>
     <button :class="['button', {'is-active': this.bg == '#fff'}]" @click="bg = '#fff'">None
       <svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg"><rect width="220" height="150" fill="white" /></svg>
     </button>
@@ -69,9 +70,7 @@
     <button :class="['button', {'is-active': this.bg == 'grid'}]" @click="bg = 'grid'">Grid
       <svg height="26" viewBox="0 0 26 26" width="26" xmlns="http://www.w3.org/2000/svg" class="icon"><g fill="none"><rect fill="#FFF" height="26" width="26"/><g fill="#DADADA"><circle cx="13" cy="13" r="1"/><circle cx="25" cy="13" r="1"/><circle cx="7" cy="13" r="1"/><circle cx="1" cy="13" r="1"/><circle cx="19" cy="13" r="1"/><circle cx="13" cy="19" r="1"/><circle cx="25" cy="19" r="1"/><circle cx="7" cy="19" r="1"/><circle cx="1" cy="19" r="1"/><circle cx="19" cy="19" r="1"/><circle cx="13" cy="25" r="1"/><circle cx="25" cy="25" r="1"/><circle cx="7" cy="25" r="1"/><circle cx="1" cy="25" r="1"/><circle cx="19" cy="25" r="1"/><circle cx="13" cy="7" r="1"/><circle cx="25" cy="7" r="1"/><circle cx="7" cy="7" r="1"/><circle cx="1" cy="7" r="1"/><circle cx="19" cy="7" r="1"/><circle cx="13" cy="1" r="1"/><circle cx="25" cy="1" r="1"/><circle cx="7" cy="1" r="1"/><circle cx="1" cy="1" r="1"/><circle cx="19" cy="1" r="1"/></g></g></svg>
     </button>
-  </div>
-  <div class="container button-colours">
-    <h2>Colour</h2>
+    <span>Colour</span>
     <button :class="['button', {'is-active': this.color == 'red'}]" @click="color = 'red'">Red
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="red" cx="45" cy="45" r="45"/></svg>
     </button>
@@ -96,9 +95,7 @@
     <button :class="['button', {'is-active': this.color == ''}]" @click="color = ''">None
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon icon-none"><path d="M 25 2 C 12.309534 2 2 12.309534 2 25 C 2 37.690466 12.309534 48 25 48 C 37.690466 48 48 37.690466 48 25 C 48 12.309534 37.690466 2 25 2 z M 25 4 C 36.609534 4 46 13.390466 46 25 C 46 36.609534 36.609534 46 25 46 C 13.390466 46 4 36.609534 4 25 C 4 13.390466 13.390466 4 25 4 z M 32.990234 15.986328 A 1.0001 1.0001 0 0 0 32.292969 16.292969 L 25 23.585938 L 17.707031 16.292969 A 1.0001 1.0001 0 0 0 16.990234 15.990234 A 1.0001 1.0001 0 0 0 16.292969 17.707031 L 23.585938 25 L 16.292969 32.292969 A 1.0001 1.0001 0 1 0 17.707031 33.707031 L 25 26.414062 L 32.292969 33.707031 A 1.0001 1.0001 0 1 0 33.707031 32.292969 L 26.414062 25 L 33.707031 17.707031 A 1.0001 1.0001 0 0 0 32.990234 15.986328 z"></path></svg>
     </button>
-  </div>
-  <div class="container button-colours">
-    <h2>Fill</h2>
+    <span>Fill</span>
     <button :class="['button', {'is-active': this.fill == 'red'}]" @click="fill = 'red'">Red
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="red" cx="45" cy="45" r="45"/></svg>
     </button>
@@ -124,14 +121,10 @@
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon icon-none"><path d="M 25 2 C 12.309534 2 2 12.309534 2 25 C 2 37.690466 12.309534 48 25 48 C 37.690466 48 48 37.690466 48 25 C 48 12.309534 37.690466 2 25 2 z M 25 4 C 36.609534 4 46 13.390466 46 25 C 46 36.609534 36.609534 46 25 46 C 13.390466 46 4 36.609534 4 25 C 4 13.390466 13.390466 4 25 4 z M 32.990234 15.986328 A 1.0001 1.0001 0 0 0 32.292969 16.292969 L 25 23.585938 L 17.707031 16.292969 A 1.0001 1.0001 0 0 0 16.990234 15.990234 A 1.0001 1.0001 0 0 0 16.292969 17.707031 L 23.585938 25 L 16.292969 32.292969 A 1.0001 1.0001 0 1 0 17.707031 33.707031 L 25 26.414062 L 32.292969 33.707031 A 1.0001 1.0001 0 1 0 33.707031 32.292969 L 26.414062 25 L 33.707031 17.707031 A 1.0001 1.0001 0 0 0 32.990234 15.986328 z"></path></svg>
     </button>
   </div>
-
-  <div v-if="hasError()" class="container">
-    <h2>Error</h2>
-    <p>Bad URL: letters, numbers, and - (dash) only; Between 5 and 50 characters.</p>
-  </div>
-  <div class="container">
-    <canvas ref="board" />
-  </div>
+</div>
+<div class="board-container">
+  <canvas ref="board" />
+</div>
 </div></template>
 
 <script>
@@ -139,6 +132,9 @@
 import firebase, { db } from "@/firebaseinit"
 import { fabric } from '@/fabric'
 import { routeHelpers } from '@/router'
+
+const canvas_width = 2700
+const canvas_height = 1519
 
 export default {
   name: "board",
@@ -327,6 +323,15 @@ export default {
         this.width = el.strokeWidth
         this.canvas.freeDrawingBrush.width = el.strokeWidth
       }
+    },
+    onResize() {
+      const ratio = canvas_width / canvas_height
+      const containerWidth = Math.min(canvas_width, window.innerWidth-(window.innerWidth/20))
+      const scale = containerWidth / this.canvas.getWidth()
+      const zoom  = this.canvas.getZoom() * scale
+
+      this.canvas.setDimensions({width: containerWidth, height: containerWidth / ratio})
+      this.canvas.setViewportTransform([zoom, 0, 0, zoom, 0, 0])
     }
   },
   watch: {
@@ -393,8 +398,11 @@ export default {
     const canvasRef = this.$refs.board
 
     this.canvas = new fabric.Canvas(canvasRef, {
-      height: 500, width: 900, backgroundColor: this.bg, isDrawingMode: false
+      height: canvas_height, width: canvas_width, backgroundColor: this.bg, isDrawingMode: false
     })
+
+    this.onResize()
+    window.addEventListener('resize', this.onResize)
 
     this.canvas.on('selection:cleared', options => { if (!options.hasOwnProperty('deselected')) return
       options.deselected.forEach(el => {
@@ -451,8 +459,11 @@ export default {
 
 
 <style>
+body {margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI","Roboto", "Oxygen", "Ubuntu", "Helvetica Neue", Arial, sans-serif;
+}
+
 .button {padding: 0; width: 45px; height: 55px; margin-right: 5px}
-/*.button-colours button {padding: 10px; border-radius: 27px; border-radius: 27px; width: 45px; height: 45px}*/
+.button.is-active {background-color: gray;}
 
 .red {background-color: red}
 .green  {background-color: green}
@@ -482,4 +493,13 @@ export default {
 .font-underline {text-decoration: underline}
 
 .divider {width: 20px; display: inline-block}
+
+.wrapper {position: relative;}
+.board-buttons {}
+.board-container {margin-top: 30px}
+
+.canvas-container {margin-left: auto; margin-right: auto}
+
+.row2 h2 {display: inline-block}
+
 </style>
