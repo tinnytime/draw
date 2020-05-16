@@ -13,7 +13,17 @@ const firebaseConfig = {
     measurementId: process.env.VUE_APP_FIREBASE_MEASURMENT_ID
 };
 
-firebase.initializeApp(firebaseConfig);
+const _firebaseConfig = {
+    apiKey: "AIzaSyDPQiAJJt4t9wRFiPS3udDYvq-RXb8MeM8",
+    authDomain: "draw-8c2a3.firebaseapp.com",
+    databaseURL: "https://draw-8c2a3.firebaseio.com",
+    projectId: "draw-8c2a3",
+    storageBucket: "draw-8c2a3.appspot.com",
+    messagingSenderId: "35954692481",
+    appId: "1:35954692481:web:7bd6a54671e1787b375880"
+};
+
+firebase.initializeApp(_firebaseConfig);
 
 export const db = {
   refId() {
