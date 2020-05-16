@@ -314,6 +314,11 @@ export default {
         return
       }
 
+      this.fontFamily = ''
+      this.fontBold = ''
+      this.fontItalic = ''
+      this.fontUnderline = ''
+
       if (el.hasOwnProperty('fill')) this.fill = el.fill
       if (el.hasOwnProperty('stroke')) {
         this.color = el.stroke
