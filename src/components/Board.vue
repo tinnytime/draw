@@ -218,7 +218,7 @@ export default {
       const data = { data: el.toJSON(['id']) }
 
       db.updateElementById(id, data)
-      this.toggleSelect(el)
+      // this.toggleSelect(el)
     },
     addCircle() {
       const id = db.createNewElementKey()
@@ -228,7 +228,7 @@ export default {
       const data = { data: el.toJSON(['id']) }
 
       db.updateElementById(id, data)
-      this.toggleSelect(el)
+      // this.toggleSelect(el)
     },
     addTriangle() {
       const id = db.createNewElementKey()
@@ -239,7 +239,7 @@ export default {
       const data = { data: el.toJSON(['id']) }
 
       db.updateElementById(id, data)
-      this.toggleSelect(el)
+      // this.toggleSelect(el)
     },
     addLine() {
       const id = db.createNewElementKey()
@@ -250,7 +250,7 @@ export default {
       const data = { data: el.toJSON(['id', 'typePatched']) }
 
       db.updateElementById(id, data)
-      this.toggleSelect(el)
+      // this.toggleSelect(el)
     },
     addArrow() {
       const id = db.createNewElementKey()
@@ -261,7 +261,7 @@ export default {
       const data = { data: el.toJSON(['id', 'typePatched']) }
 
       db.updateElementById(id, data)
-      this.toggleSelect(el)
+      // this.toggleSelect(el)
     },
     addText() {
       const id = db.createNewElementKey()
@@ -274,7 +274,7 @@ export default {
       const data = { data: el.toJSON(['id']) }
 
       db.updateElementById(id, data)
-      this.toggleSelect(el)
+      // this.toggleSelect(el)
     },
     togglePencil(e) {
       this.isActiveSelect = false
