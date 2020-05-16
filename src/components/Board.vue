@@ -336,6 +336,7 @@ export default {
         object.selectable = allow
         object.evented = allow
       })
+      this.canvas.selection = allow
       this.canvas.renderAll()
     },
     onResize() {
