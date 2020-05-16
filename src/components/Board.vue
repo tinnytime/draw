@@ -143,7 +143,7 @@ export default {
   data: () => ({
     title: 'Untitled',
     canvas: null,
-    bg: null,
+    bg: '#fff',
     isActivePencil: false,
     isActiveSelect: false,
     color: null,
