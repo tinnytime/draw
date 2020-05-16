@@ -421,7 +421,9 @@ export default {
     this.onResize()
     window.addEventListener('resize', this.onResize)
 
-    this.canvas.on('selection:cleared', options => { if (!options.hasOwnProperty('deselected')) return
+    this.canvas.on('selection:cleared', options => {
+      if (options.e === undefined || !options.hasOwnProperty('deselected')) return
+
       options.deselected.forEach(el => {
         const data = { data: el.toJSON(['id', 'typePatched']) }
         db.updateElementById(el.id, data)
