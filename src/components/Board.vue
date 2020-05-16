@@ -143,7 +143,7 @@ export default {
     canvas: null,
     bg: '#fff',
     isActivePencil: false,
-    isActiveSelect: true,
+    isActiveSelect: false,
     color: 'blue',
     fill: '',
     width: 2,
@@ -329,6 +329,13 @@ export default {
         this.canvas.freeDrawingBrush.width = el.strokeWidth
       }
     },
+    allowSelect(allow) {
+      this.canvas.forEachObject(function(object) {
+        object.selectable = allow
+        object.evented = allow
+      })
+      this.canvas.renderAll()
+    },
     onResize() {
       const ratio = canvas_width / canvas_height
       const containerWidth = Math.min(canvas_width, window.innerWidth-(window.innerWidth/20))
@@ -340,6 +347,9 @@ export default {
     }
   },
   watch: {
+    isActiveSelect(val) {
+      this.allowSelect(val)
+    },
     bg(val) {
       if (val === 'grid') {
         const dots = 'data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjI2IiB2aWV3Qm94PSIwIDAgMjYgMjYiIHdpZHRoPSIyNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIj48cmVjdCBmaWxsPSIjRkZGIiBoZWlnaHQ9IjI2IiB3aWR0aD0iMjYiLz48ZyBmaWxsPSIjREFEQURBIj48Y2lyY2xlIGN4PSIxMyIgY3k9IjEzIiByPSIxIi8+PGNpcmNsZSBjeD0iMjUiIGN5PSIxMyIgcj0iMSIvPjxjaXJjbGUgY3g9IjciIGN5PSIxMyIgcj0iMSIvPjxjaXJjbGUgY3g9IjEiIGN5PSIxMyIgcj0iMSIvPjxjaXJjbGUgY3g9IjE5IiBjeT0iMTMiIHI9IjEiLz48Y2lyY2xlIGN4PSIxMyIgY3k9IjE5IiByPSIxIi8+PGNpcmNsZSBjeD0iMjUiIGN5PSIxOSIgcj0iMSIvPjxjaXJjbGUgY3g9IjciIGN5PSIxOSIgcj0iMSIvPjxjaXJjbGUgY3g9IjEiIGN5PSIxOSIgcj0iMSIvPjxjaXJjbGUgY3g9IjE5IiBjeT0iMTkiIHI9IjEiLz48Y2lyY2xlIGN4PSIxMyIgY3k9IjI1IiByPSIxIi8+PGNpcmNsZSBjeD0iMjUiIGN5PSIyNSIgcj0iMSIvPjxjaXJjbGUgY3g9IjciIGN5PSIyNSIgcj0iMSIvPjxjaXJjbGUgY3g9IjEiIGN5PSIyNSIgcj0iMSIvPjxjaXJjbGUgY3g9IjE5IiBjeT0iMjUiIHI9IjEiLz48Y2lyY2xlIGN4PSIxMyIgY3k9IjciIHI9IjEiLz48Y2lyY2xlIGN4PSIyNSIgY3k9IjciIHI9IjEiLz48Y2lyY2xlIGN4PSI3IiBjeT0iNyIgcj0iMSIvPjxjaXJjbGUgY3g9IjEiIGN5PSI3IiByPSIxIi8+PGNpcmNsZSBjeD0iMTkiIGN5PSI3IiByPSIxIi8+PGNpcmNsZSBjeD0iMTMiIGN5PSIxIiByPSIxIi8+PGNpcmNsZSBjeD0iMjUiIGN5PSIxIiByPSIxIi8+PGNpcmNsZSBjeD0iNyIgY3k9IjEiIHI9IjEiLz48Y2lyY2xlIGN4PSIxIiBjeT0iMSIgcj0iMSIvPjxjaXJjbGUgY3g9IjE5IiBjeT0iMSIgcj0iMSIvPjwvZz48L2c+PC9zdmc+'
@@ -403,7 +413,7 @@ export default {
     const canvasRef = this.$refs.board
 
     this.canvas = new fabric.Canvas(canvasRef, {
-      height: canvas_height, width: canvas_width, backgroundColor: this.bg, isDrawingMode: false
+      height: canvas_height, width: canvas_width, backgroundColor: this.bg, isDrawingMode: false, selection: false
     })
 
     this.onResize()
@@ -458,6 +468,8 @@ export default {
       const { data } = snapshot.val()
       fabric.util.enlivenObjects([data], this.removeElements)
     })
+
+    this.allowSelect(false)
   }
 };
 </script>
