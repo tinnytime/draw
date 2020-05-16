@@ -296,7 +296,7 @@ export default {
     },
     deleteSelected() {
       this.canvas.remove(...this.canvas.getActiveObjects())
-      this.toggleSelect()
+      // this.toggleSelect()
     },
     getFabricElementsById(id) {
       // Return array of multiple because free draw tool contains multiple objects
