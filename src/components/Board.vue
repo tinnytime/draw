@@ -56,6 +56,9 @@
     </fieldset>
 
     <fieldset><legend>Shapes</legend>
+    <button class="button" @click="closeMenu(); addText()">Text
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon icon-text"><path fill="none" stroke="#000" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" d="M39,7H11 c-0.552,0-1,0.448-1,1v6c0,0.552,0.448,1,1,1h2c0.552,0,1-0.448,1-1v-3h9v28h-3c-0.552,0-1,0.448-1,1v2c0,0.552,0.448,1,1,1h10  c0.552,0,1-0.448,1-1v-2c0-0.552-0.448-1-1-1h-3V11h9v3c0,0.552,0.448,1,1,1h2c0.552,0,1-0.448,1-1V8C40,7.448,39.552,7,39,7z"></path></svg>
+    </button>
     <button class="button" @click="closeMenu(); addRect()">Rectangle
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="icon"><path fill="#000" d="M28,5v20H2V5H28 M29,4H1v22h28V4L29,4z"></path></svg>
     </button>
@@ -71,16 +74,6 @@
     <button class="button" @click="closeMenu(); addArrow()">Arrow
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon"><path d="M 27.84375 11 C 27.351563 11.078125 26.992188 11.503906 27 12 L 27 20 L 5 20 C 4.449219 20 4 20.449219 4 21 L 4 29 C 4 29.550781 4.449219 30 5 30 L 27 30 L 27 38 C 27.007813 38.375 27.222656 38.710938 27.558594 38.875 C 27.894531 39.039063 28.292969 39.003906 28.59375 38.78125 L 45.59375 25.78125 C 45.832031 25.589844 45.96875 25.304688 45.96875 25 C 45.96875 24.695313 45.832031 24.410156 45.59375 24.21875 L 28.59375 11.21875 C 28.382813 11.046875 28.113281 10.96875 27.84375 11 Z M 29 14 L 43.375 25 L 29 36 L 29 29 C 29 28.449219 28.550781 28 28 28 L 6 28 L 6 22 L 28 22 C 28.550781 22 29 21.550781 29 21 Z"></path></svg>
     </button>
-    </fieldset>
-
-
-    <fieldset><legend>Text</legend>
-    <button class="button" @click="closeMenu(); addText()">Text
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon icon-text"><path fill="none" stroke="#000" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" d="M39,7H11 c-0.552,0-1,0.448-1,1v6c0,0.552,0.448,1,1,1h2c0.552,0,1-0.448,1-1v-3h9v28h-3c-0.552,0-1,0.448-1,1v2c0,0.552,0.448,1,1,1h10  c0.552,0,1-0.448,1-1v-2c0-0.552-0.448-1-1-1h-3V11h9v3c0,0.552,0.448,1,1,1h2c0.552,0,1-0.448,1-1V8C40,7.448,39.552,7,39,7z"></path></svg>
-    </button>
-    <button :class="['button font-italic', {'is-active': fontItalic == true}]" @click="fontItalic = !fontItalic">Italic</button>
-    <button :class="['button font-bold', {'is-active': fontBold == true}]" @click="fontBold = !fontBold">Bold</button>
-    <button :class="['button font-underline', {'is-active': fontUnderline == true}]" @click="fontUnderline = !fontUnderline">Underline</button>
     </fieldset>
   </div>
 
@@ -162,7 +155,7 @@
 <script>
 
 import firebase, { db } from "@/firebaseinit"
-import { fabric } from '@/fabric'
+import { fabric } from '@/fabric.min'
 import { routeHelpers } from '@/router'
 
 const canvas_horizontal_width = 2200
@@ -372,9 +365,9 @@ export default {
       }
 
       this.fontFamily = ''
-      this.fontBold = ''
-      this.fontItalic = ''
-      this.fontUnderline = ''
+      this.fontBold = false
+      this.fontItalic = false
+      this.fontUnderline = false
 
       if (el.hasOwnProperty('fill')) this.fill = el.fill
       if (el.hasOwnProperty('stroke')) {
@@ -472,7 +465,7 @@ export default {
     fontBold(val) {
       this.canvas.getActiveObjects().forEach(el => {
         if (el.type !== 'i-text') return
-        el.fontWeight = val ? 'bold' : 'normal'
+        el.set('fontWeight', 'bold')
       })
       this.canvas.renderAll()
     },
