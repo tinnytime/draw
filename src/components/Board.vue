@@ -28,104 +28,104 @@
     <button class="button" @click="saveImage()">Export
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon icon-export"><path d="M 0.78125 -0.03125 C 0.300781 0.078125 -0.0390625 0.507813 -0.03125 1 L -0.03125 49 C -0.0273438 49.566406 0.433594 50.027344 1 50.03125 L 31 50.03125 C 31.566406 50.027344 32.027344 49.566406 32.03125 49 L 32.03125 39 L 29.96875 39 L 29.96875 47.96875 L 2.03125 47.96875 L 2.03125 2.03125 L 29.96875 2.03125 L 29.96875 11 L 32.03125 11 L 32.03125 1 C 32.027344 0.433594 31.566406 -0.0273438 31 -0.03125 L 1 -0.03125 C 0.925781 -0.0390625 0.855469 -0.0390625 0.78125 -0.03125 Z M 38.90625 15.09375 C 38.53125 15.160156 38.230469 15.433594 38.125 15.796875 C 38.019531 16.164063 38.128906 16.554688 38.40625 16.8125 L 45.5625 24 L 16 24 C 15.96875 24 15.9375 24 15.90625 24 C 15.355469 24.027344 14.925781 24.496094 14.953125 25.046875 C 14.980469 25.597656 15.449219 26.027344 16 26 L 45.5625 26 L 38.40625 33.1875 C 38.109375 33.429688 37.972656 33.816406 38.058594 34.191406 C 38.144531 34.5625 38.4375 34.855469 38.808594 34.941406 C 39.183594 35.027344 39.570313 34.890625 39.8125 34.59375 L 48.71875 25.71875 L 49.40625 25 L 48.71875 24.28125 L 39.8125 15.40625 C 39.605469 15.183594 39.304688 15.070313 39 15.09375 C 38.96875 15.09375 38.9375 15.09375 38.90625 15.09375 Z"></path></svg>
     </button>
-    <button class="button" @click="switchOrientation()">Rotate
+    <button class="button" @click="closeMenu(); switchOrientation()">Rotate
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon"><path d="M 3 3 L 3 40 L 8 40 L 8 38 L 5 38 L 5 5 L 19 5 L 19 15 L 29 15 L 29 17 L 31 17 L 31 13.585938 L 20.414062 3 L 3 3 z M 21 6.4140625 L 27.585938 13 L 21 13 L 21 6.4140625 z M 10 19 L 10 47 L 11 47 L 36.414062 47 L 47 36.414062 L 47 19 L 10 19 z M 12 21 L 45 21 L 45 35 L 35 35 L 35 45 L 12 45 L 12 21 z M 37 37 L 43.585938 37 L 37 43.585938 L 37 37 z"></path></svg>
     </button>
 
 
 
-    <button class="button" @click="addRect()">Rectangle
+    <button class="button" @click="closeMenu(); addRect()">Rectangle
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="icon"><path fill="#000" d="M28,5v20H2V5H28 M29,4H1v22h28V4L29,4z"></path></svg>
     </button>
-    <button class="button" @click="addCircle()">Circle
+    <button class="button" @click="closeMenu(); addCircle()">Circle
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon"><path d="M 25 2 C 12.309295 2 2 12.309295 2 25 C 2 37.690705 12.309295 48 25 48 C 37.690705 48 48 37.690705 48 25 C 48 12.309295 37.690705 2 25 2 z M 25 4 C 36.609824 4 46 13.390176 46 25 C 46 36.609824 36.609824 46 25 46 C 13.390176 46 4 36.609824 4 25 C 4 13.390176 13.390176 4 25 4 z"></path></svg>
     </button>
-    <button class="button" @click="addTriangle()">Triangle
+    <button class="button" @click="closeMenu(); addTriangle()">Triangle
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon"><path d="M 25 7 C 23.894531 7 23 7.894531 23 9 C 23 9.351563 23.09375 9.683594 23.25 9.96875 L 5.09375 39 C 5.0625 39 5.03125 39 5 39 C 3.894531 39 3 39.894531 3 41 C 3 42.105469 3.894531 43 5 43 C 5.753906 43 6.410156 42.585938 6.75 41.96875 L 43.25 41.96875 C 43.589844 42.585938 44.246094 43 45 43 C 46.105469 43 47 42.105469 47 41 C 47 39.894531 46.105469 39 45 39 C 44.96875 39 44.9375 39 44.90625 39 L 26.75 9.96875 C 26.90625 9.683594 27 9.351563 27 9 C 27 7.894531 26.105469 7 25 7 Z M 24.90625 11 C 24.9375 11 24.96875 11 25 11 C 25.03125 11 25.0625 11 25.09375 11 L 43.25 40.03125 L 6.75 40.03125 Z"></path></svg>
     </button>
-    <button class="button" @click="addLine()">Line
+    <button class="button" @click="closeMenu(); addLine()">Line
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon"><path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="2.613" stroke-width="2" d="M47 3L3 47"></path></svg>
     </button>
-    <button class="button" @click="addArrow()">Arrow
+    <button class="button" @click="closeMenu(); addArrow()">Arrow
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon"><path d="M 27.84375 11 C 27.351563 11.078125 26.992188 11.503906 27 12 L 27 20 L 5 20 C 4.449219 20 4 20.449219 4 21 L 4 29 C 4 29.550781 4.449219 30 5 30 L 27 30 L 27 38 C 27.007813 38.375 27.222656 38.710938 27.558594 38.875 C 27.894531 39.039063 28.292969 39.003906 28.59375 38.78125 L 45.59375 25.78125 C 45.832031 25.589844 45.96875 25.304688 45.96875 25 C 45.96875 24.695313 45.832031 24.410156 45.59375 24.21875 L 28.59375 11.21875 C 28.382813 11.046875 28.113281 10.96875 27.84375 11 Z M 29 14 L 43.375 25 L 29 36 L 29 29 C 29 28.449219 28.550781 28 28 28 L 6 28 L 6 22 L 28 22 C 28.550781 22 29 21.550781 29 21 Z"></path></svg>
     </button>
 
 
 
-    <button class="button" @click="addText()">Text
+    <button class="button" @click="closeMenu(); addText()">Text
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon icon-text"><path fill="none" stroke="#000" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" d="M39,7H11 c-0.552,0-1,0.448-1,1v6c0,0.552,0.448,1,1,1h2c0.552,0,1-0.448,1-1v-3h9v28h-3c-0.552,0-1,0.448-1,1v2c0,0.552,0.448,1,1,1h10  c0.552,0,1-0.448,1-1v-2c0-0.552-0.448-1-1-1h-3V11h9v3c0,0.552,0.448,1,1,1h2c0.552,0,1-0.448,1-1V8C40,7.448,39.552,7,39,7z"></path></svg>
     </button>
-    <button :class="['button font-arial', {'is-active': fontFamily == 'Arial'}]" @click="fontFamily = 'Arial'">Arial</button>
-    <button :class="['button font-courier-new', {'is-active': fontFamily == 'Courier New'}]" @click="fontFamily = 'Courier New'">Courier New</button>
-    <button :class="['button font-lucida-console', {'is-active': fontFamily == 'Lucida Console'}]" @click="fontFamily = 'Lucida Console'">Lucida Console</button>
-    <button :class="['button font-comic-sans', {'is-active': fontFamily == 'Comic Sans MS'}]" @click="fontFamily = 'Comic Sans MS'">Comic Sans</button>
-    <button :class="['button font-italic', {'is-active': fontItalic == true}]" @click="fontItalic = !fontItalic">Italic</button>
-    <button :class="['button font-bold', {'is-active': fontBold == true}]" @click="fontBold = !fontBold">Bold</button>
-    <button :class="['button font-underline', {'is-active': fontUnderline == true}]" @click="fontUnderline = !fontUnderline">Underline</button>
+    <button :class="['button font-arial', {'is-active': fontFamily == 'Arial'}]" @click="closeMenu(); fontFamily = 'Arial'">Arial</button>
+    <button :class="['button font-courier-new', {'is-active': fontFamily == 'Courier New'}]" @click="closeMenu(); fontFamily = 'Courier New'">Courier New</button>
+    <button :class="['button font-lucida-console', {'is-active': fontFamily == 'Lucida Console'}]" @click="closeMenu(); fontFamily = 'Lucida Console'">Lucida Console</button>
+    <button :class="['button font-comic-sans', {'is-active': fontFamily == 'Comic Sans MS'}]" @click="closeMenu(); fontFamily = 'Comic Sans MS'">Comic Sans</button>
+    <button :class="['button font-italic', {'is-active': fontItalic == true}]" @click="closeMenu(); fontItalic = !fontItalic">Italic</button>
+    <button :class="['button font-bold', {'is-active': fontBold == true}]" @click="closeMenu(); fontBold = !fontBold">Bold</button>
+    <button :class="['button font-underline', {'is-active': fontUnderline == true}]" @click="closeMenu(); fontUnderline = !fontUnderline">Underline</button>
   </div>
 
   <div class="row row2">
     <span>Background</span>
-    <button :class="['button', {'is-active': this.bg == '#fff'}]" @click="bg = '#fff'">White
+    <button :class="['button', {'is-active': this.bg == '#fff'}]" @click="closeMenu(); bg = '#fff'">White
       <svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg"><rect width="220" height="150" fill="white" /></svg>
     </button>
-    <button :class="['button', {'is-active': this.bg == '#2b519b'}]" @click="bg = '#2b519b'">Blue
+    <button :class="['button', {'is-active': this.bg == '#2b519b'}]" @click="closeMenu(); bg = '#2b519b'">Blue
       <svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg"><rect width="220" height="150" fill="blue" /></svg>
     </button>
-    <button :class="['button', {'is-active': this.bg == '#000'}]" @click="bg = '#000'">Black
+    <button :class="['button', {'is-active': this.bg == '#000'}]" @click="closeMenu(); bg = '#000'">Black
       <svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg"><rect width="220" height="150" fill="black" /></svg>
     </button>
-    <button :class="['button', {'is-active': this.bg == 'grid'}]" @click="bg = 'grid'">Grid
+    <button :class="['button', {'is-active': this.bg == 'grid'}]" @click="closeMenu(); bg = 'grid'">Grid
       <svg height="26" viewBox="0 0 26 26" width="26" xmlns="http://www.w3.org/2000/svg" class="icon"><g fill="none"><rect fill="#FFF" height="26" width="26"/><g fill="#DADADA"><circle cx="13" cy="13" r="1"/><circle cx="25" cy="13" r="1"/><circle cx="7" cy="13" r="1"/><circle cx="1" cy="13" r="1"/><circle cx="19" cy="13" r="1"/><circle cx="13" cy="19" r="1"/><circle cx="25" cy="19" r="1"/><circle cx="7" cy="19" r="1"/><circle cx="1" cy="19" r="1"/><circle cx="19" cy="19" r="1"/><circle cx="13" cy="25" r="1"/><circle cx="25" cy="25" r="1"/><circle cx="7" cy="25" r="1"/><circle cx="1" cy="25" r="1"/><circle cx="19" cy="25" r="1"/><circle cx="13" cy="7" r="1"/><circle cx="25" cy="7" r="1"/><circle cx="7" cy="7" r="1"/><circle cx="1" cy="7" r="1"/><circle cx="19" cy="7" r="1"/><circle cx="13" cy="1" r="1"/><circle cx="25" cy="1" r="1"/><circle cx="7" cy="1" r="1"/><circle cx="1" cy="1" r="1"/><circle cx="19" cy="1" r="1"/></g></g></svg>
     </button>
     <span>Colour</span>
-    <button :class="['button', {'is-active': this.color == 'red'}]" @click="color = 'red'">Red
+    <button :class="['button', {'is-active': this.color == 'red'}]" @click="closeMenu(); color = 'red'">Red
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="red" cx="45" cy="45" r="45"/></svg>
     </button>
-    <button :class="['button', {'is-active': this.color == 'green'}]" @click="color = 'green'">Green
+    <button :class="['button', {'is-active': this.color == 'green'}]" @click="closeMenu(); color = 'green'">Green
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="green" cx="45" cy="45" r="45"/></svg>
     </button>
-    <button :class="['button', {'is-active': this.color == 'blue'}]" @click="color = 'blue'">Blue
+    <button :class="['button', {'is-active': this.color == 'blue'}]" @click="closeMenu(); color = 'blue'">Blue
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="blue" cx="45" cy="45" r="45"/></svg>
     </button>
-    <button :class="['button', {'is-active': this.color == 'yellow'}]" @click="color = 'yellow'">Yellow
+    <button :class="['button', {'is-active': this.color == 'yellow'}]" @click="closeMenu(); color = 'yellow'">Yellow
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="yellow" cx="45" cy="45" r="45"/></svg>
     </button>
-    <button :class="['button', {'is-active': this.color == 'pink'}]" @click="color = 'pink'">Pink
+    <button :class="['button', {'is-active': this.color == 'pink'}]" @click="closeMenu(); color = 'pink'">Pink
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="pink" cx="45" cy="45" r="45"/></svg>
     </button>
-    <button :class="['button', {'is-active': this.color == 'white'}]" @click="color = 'white'">White
+    <button :class="['button', {'is-active': this.color == 'white'}]" @click="closeMenu(); color = 'white'">White
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="white" cx="45" cy="45" r="45"/></svg>
     </button>
-    <button :class="['button', {'is-active': this.color == 'black'}]" @click="color = 'black'">Black
+    <button :class="['button', {'is-active': this.color == 'black'}]" @click="closeMenu(); color = 'black'">Black
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="black" cx="45" cy="45" r="45"/></svg>
     </button>
-    <button :class="['button']" @click="color = ''">None
+    <button :class="['button']" @click="closeMenu(); color = ''">None
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon icon-none"><path d="M 25 2 C 12.309534 2 2 12.309534 2 25 C 2 37.690466 12.309534 48 25 48 C 37.690466 48 48 37.690466 48 25 C 48 12.309534 37.690466 2 25 2 z M 25 4 C 36.609534 4 46 13.390466 46 25 C 46 36.609534 36.609534 46 25 46 C 13.390466 46 4 36.609534 4 25 C 4 13.390466 13.390466 4 25 4 z M 32.990234 15.986328 A 1.0001 1.0001 0 0 0 32.292969 16.292969 L 25 23.585938 L 17.707031 16.292969 A 1.0001 1.0001 0 0 0 16.990234 15.990234 A 1.0001 1.0001 0 0 0 16.292969 17.707031 L 23.585938 25 L 16.292969 32.292969 A 1.0001 1.0001 0 1 0 17.707031 33.707031 L 25 26.414062 L 32.292969 33.707031 A 1.0001 1.0001 0 1 0 33.707031 32.292969 L 26.414062 25 L 33.707031 17.707031 A 1.0001 1.0001 0 0 0 32.990234 15.986328 z"></path></svg>
     </button>
     <span>Fill</span>
-    <button :class="['button', {'is-active': this.fill == 'red'}]" @click="fill = 'red'">Red
+    <button :class="['button', {'is-active': this.fill == 'red'}]" @click="closeMenu(); fill = 'red'">Red
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="red" cx="45" cy="45" r="45"/></svg>
     </button>
-    <button :class="['button', {'is-active': this.fill == 'green'}]" @click="fill = 'green'">Green
+    <button :class="['button', {'is-active': this.fill == 'green'}]" @click="closeMenu(); fill = 'green'">Green
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="green" cx="45" cy="45" r="45"/></svg>
     </button>
-    <button :class="['button', {'is-active': this.fill == 'blue'}]" @click="fill = 'blue'">Blue
+    <button :class="['button', {'is-active': this.fill == 'blue'}]" @click="closeMenu(); fill = 'blue'">Blue
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="blue" cx="45" cy="45" r="45"/></svg>
     </button>
-    <button :class="['button', {'is-active': this.fill == 'yellow'}]" @click="fill = 'yellow'">Yellow
+    <button :class="['button', {'is-active': this.fill == 'yellow'}]" @click="closeMenu(); fill = 'yellow'">Yellow
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="yellow" cx="45" cy="45" r="45"/></svg>
     </button>
-    <button :class="['button', {'is-active': this.fill == 'pink'}]" @click="fill = 'pink'">Pink
+    <button :class="['button', {'is-active': this.fill == 'pink'}]" @click="closeMenu(); fill = 'pink'">Pink
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="pink" cx="45" cy="45" r="45"/></svg>
     </button>
-    <button :class="['button', {'is-active': this.fill == 'white'}]" @click="fill = 'white'">White
+    <button :class="['button', {'is-active': this.fill == 'white'}]" @click="closeMenu(); fill = 'white'">White
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="white" cx="45" cy="45" r="45"/></svg>
     </button>
-    <button :class="['button', {'is-active': this.fill == 'black'}]" @click="fill = 'black'">Black
+    <button :class="['button', {'is-active': this.fill == 'black'}]" @click="closeMenu(); fill = 'black'">Black
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="black" cx="45" cy="45" r="45"/></svg>
     </button>
-    <button :class="['button']" @click="fill = ''">None
+    <button :class="['button']" @click="closeMenu(); fill = ''">None
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon icon-none"><path d="M 25 2 C 12.309534 2 2 12.309534 2 25 C 2 37.690466 12.309534 48 25 48 C 37.690466 48 48 37.690466 48 25 C 48 12.309534 37.690466 2 25 2 z M 25 4 C 36.609534 4 46 13.390466 46 25 C 46 36.609534 36.609534 46 25 46 C 13.390466 46 4 36.609534 4 25 C 4 13.390466 13.390466 4 25 4 z M 32.990234 15.986328 A 1.0001 1.0001 0 0 0 32.292969 16.292969 L 25 23.585938 L 17.707031 16.292969 A 1.0001 1.0001 0 0 0 16.990234 15.990234 A 1.0001 1.0001 0 0 0 16.292969 17.707031 L 23.585938 25 L 16.292969 32.292969 A 1.0001 1.0001 0 1 0 17.707031 33.707031 L 25 26.414062 L 32.292969 33.707031 A 1.0001 1.0001 0 1 0 33.707031 32.292969 L 26.414062 25 L 33.707031 17.707031 A 1.0001 1.0001 0 0 0 32.990234 15.986328 z"></path></svg>
     </button>
 
@@ -186,6 +186,9 @@ export default {
     },
     switchOrientation() {
       this.orientation = this.orientation === 'horizontal' ? 'vertical' : 'horizontal'
+    },
+    closeMenu() {
+      this.menuIsHidden = true
     },
     addElements(elements) {
       elements.forEach(el => {
