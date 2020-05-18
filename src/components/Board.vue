@@ -365,11 +365,22 @@ export default {
     },
     onResize() {
       const ratio = canvas_width / canvas_height
-      const containerWidth = Math.min(canvas_width, window.innerWidth-(window.innerWidth/20))
+      let containerWidth = 0
+      let containerHeight = 0
+
+      if (this.orientation === 'horizontal') {
+        containerWidth = Math.min(canvas_width, window.innerWidth-(window.innerWidth/10))
+        containerHeight = containerWidth / ratio
+
+      } else {
+        containerHeight = Math.min(canvas_height, window.innerHeight-(window.innerHeight/10))
+        containerWidth = containerHeight * ratio
+      }
+
       const scale = containerWidth / this.canvas.getWidth()
       const zoom  = this.canvas.getZoom() * scale
 
-      this.canvas.setDimensions({width: containerWidth, height: containerWidth / ratio})
+      this.canvas.setDimensions({width: containerWidth, height: containerHeight})
       this.canvas.setViewportTransform([zoom, 0, 0, zoom, 0, 0])
       this.canvas.renderAll()
     }
