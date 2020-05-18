@@ -44,13 +44,13 @@
     </fieldset>
 
     <fieldset><legend>Thickness</legend>
-    <button :class="['button', {'is-active': width == 8}]" @click="width = 8">Normal
+    <button :class="['button', {'is-active': width == 20}]" @click="width = 20">Normal
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon"><circle cx="9" cy="9" r="9"/></svg>
     </button>
-    <button :class="['button', {'is-active': width == 14}]" @click="width = 14">Medium
+    <button :class="['button', {'is-active': width == 50}]" @click="width = 50">Medium
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon"><circle cx="22" cy="22" r="22"/></svg>
     </button>
-    <button :class="['button', {'is-active': width == 20}]" @click="width = 20">Thick
+    <button :class="['button', {'is-active': width == 80}]" @click="width = 80">Thick
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon"><circle cx="30" cy="30" r="30"/></svg>
     </button>
     </fieldset>
@@ -86,13 +86,13 @@
 
   <div class="row row2">
     <fieldset><legend>Background</legend>
-    <button :class="['button', {'is-active': this.bg == '#fff'}]" @click="closeMenu(); bg = '#fff'">White
+    <button :class="['button', {'is-active': this.bg == '#FFFFFF'}]" @click="closeMenu(); bg = '#FFFFFF'">White
       <svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg"><rect width="220" height="150" fill="white" /></svg>
     </button>
     <button :class="['button', {'is-active': this.bg == '#2b519b'}]" @click="closeMenu(); bg = '#2b519b'">Blue
       <svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg"><rect width="220" height="150" fill="blue" /></svg>
     </button>
-    <button :class="['button', {'is-active': this.bg == '#000'}]" @click="closeMenu(); bg = '#000'">Black
+    <button :class="['button', {'is-active': this.bg == '#000000'}]" @click="closeMenu(); bg = '#000000'">Black
       <svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg"><rect width="220" height="150" fill="black" /></svg>
     </button>
     <button :class="['button', {'is-active': this.bg == 'grid'}]" @click="closeMenu(); bg = 'grid'">Grid
@@ -100,52 +100,52 @@
     </button>
     </fieldset>
     <fieldset><legend>Colour</legend>
-    <button :class="['button', {'is-active': this.color == 'red'}]" @click="closeMenu(); color = 'red'">Red
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="red" cx="45" cy="45" r="45"/></svg>
+    <button :class="['button', {'is-active': this.color == '#FF6961'}]" @click="closeMenu(); color = '#FF6961'">Red
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="#FF6961" cx="45" cy="45" r="45"/></svg>
     </button>
-    <button :class="['button', {'is-active': this.color == 'green'}]" @click="closeMenu(); color = 'green'">Green
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="green" cx="45" cy="45" r="45"/></svg>
+    <button :class="['button', {'is-active': this.color == '#77dd77'}]" @click="closeMenu(); color = '#77dd77'">Green
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="#77dd77" cx="45" cy="45" r="45"/></svg>
     </button>
-    <button :class="['button', {'is-active': this.color == 'blue'}]" @click="closeMenu(); color = 'blue'">Blue
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="blue" cx="45" cy="45" r="45"/></svg>
+    <button :class="['button', {'is-active': this.color == '#7DD7E6'}]" @click="closeMenu(); color = '#7DD7E6'">Blue
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="#7DD7E6" cx="45" cy="45" r="45"/></svg>
     </button>
-    <button :class="['button', {'is-active': this.color == 'yellow'}]" @click="closeMenu(); color = 'yellow'">Yellow
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="yellow" cx="45" cy="45" r="45"/></svg>
+    <button :class="['button', {'is-active': this.color == '#FDFD96'}]" @click="closeMenu(); color = '#FDFD96'">Yellow
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="#FDFD96" cx="45" cy="45" r="45"/></svg>
     </button>
-    <button :class="['button', {'is-active': this.color == 'pink'}]" @click="closeMenu(); color = 'pink'">Pink
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="pink" cx="45" cy="45" r="45"/></svg>
+    <button :class="['button', {'is-active': this.color == '#FFD1DC'}]" @click="closeMenu(); color = '#FFD1DC'">Pink
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="#FFD1DC" cx="45" cy="45" r="45"/></svg>
     </button>
-    <button :class="['button', {'is-active': this.color == 'white'}]" @click="closeMenu(); color = 'white'">White
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="white" cx="45" cy="45" r="45"/></svg>
+    <button :class="['button', {'is-active': this.color == '#FFFFFF'}]" @click="closeMenu(); color = '#FFFFFF'">White
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="#FFFFFF" cx="45" cy="45" r="45"/></svg>
     </button>
-    <button :class="['button', {'is-active': this.color == 'black'}]" @click="closeMenu(); color = 'black'">Black
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="black" cx="45" cy="45" r="45"/></svg>
+    <button :class="['button', {'is-active': this.color == '#000000'}]" @click="closeMenu(); color = '#000000'">Black
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="#000000" cx="45" cy="45" r="45"/></svg>
     </button>
     <button :class="['button']" @click="closeMenu(); color = ''">None
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon icon-none"><path d="M 25 2 C 12.309534 2 2 12.309534 2 25 C 2 37.690466 12.309534 48 25 48 C 37.690466 48 48 37.690466 48 25 C 48 12.309534 37.690466 2 25 2 z M 25 4 C 36.609534 4 46 13.390466 46 25 C 46 36.609534 36.609534 46 25 46 C 13.390466 46 4 36.609534 4 25 C 4 13.390466 13.390466 4 25 4 z M 32.990234 15.986328 A 1.0001 1.0001 0 0 0 32.292969 16.292969 L 25 23.585938 L 17.707031 16.292969 A 1.0001 1.0001 0 0 0 16.990234 15.990234 A 1.0001 1.0001 0 0 0 16.292969 17.707031 L 23.585938 25 L 16.292969 32.292969 A 1.0001 1.0001 0 1 0 17.707031 33.707031 L 25 26.414062 L 32.292969 33.707031 A 1.0001 1.0001 0 1 0 33.707031 32.292969 L 26.414062 25 L 33.707031 17.707031 A 1.0001 1.0001 0 0 0 32.990234 15.986328 z"></path></svg>
     </button>
     </fieldset>
     <fieldset><legend>Fill</legend>
-    <button :class="['button', {'is-active': this.fill == 'red'}]" @click="closeMenu(); fill = 'red'">Red
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="red" cx="45" cy="45" r="45"/></svg>
+    <button :class="['button', {'is-active': this.fill == '#FF6961'}]" @click="closeMenu(); fill = '#FF6961'">Red
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="#FF6961" cx="45" cy="45" r="45"/></svg>
     </button>
-    <button :class="['button', {'is-active': this.fill == 'green'}]" @click="closeMenu(); fill = 'green'">Green
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="green" cx="45" cy="45" r="45"/></svg>
+    <button :class="['button', {'is-active': this.fill == '#77dd77'}]" @click="closeMenu(); fill = '#77dd77'">Green
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="#77dd77" cx="45" cy="45" r="45"/></svg>
     </button>
-    <button :class="['button', {'is-active': this.fill == 'blue'}]" @click="closeMenu(); fill = 'blue'">Blue
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="blue" cx="45" cy="45" r="45"/></svg>
+    <button :class="['button', {'is-active': this.fill == '#7DD7E6'}]" @click="closeMenu(); fill = '#7DD7E6'">Blue
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="#7DD7E6" cx="45" cy="45" r="45"/></svg>
     </button>
-    <button :class="['button', {'is-active': this.fill == 'yellow'}]" @click="closeMenu(); fill = 'yellow'">Yellow
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="yellow" cx="45" cy="45" r="45"/></svg>
+    <button :class="['button', {'is-active': this.fill == '#FDFD96'}]" @click="closeMenu(); fill = '#FDFD96'">Yellow
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="#FDFD96" cx="45" cy="45" r="45"/></svg>
     </button>
-    <button :class="['button', {'is-active': this.fill == 'pink'}]" @click="closeMenu(); fill = 'pink'">Pink
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="pink" cx="45" cy="45" r="45"/></svg>
+    <button :class="['button', {'is-active': this.fill == '#FFD1DC'}]" @click="closeMenu(); fill = '#FFD1DC'">Pink
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="#FFD1DC" cx="45" cy="45" r="45"/></svg>
     </button>
-    <button :class="['button', {'is-active': this.fill == 'white'}]" @click="closeMenu(); fill = 'white'">White
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="white" cx="45" cy="45" r="45"/></svg>
+    <button :class="['button', {'is-active': this.fill == '#FFFFFF'}]" @click="closeMenu(); fill = '#FFFFFF'">White
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="#FFFFFF" cx="45" cy="45" r="45"/></svg>
     </button>
-    <button :class="['button', {'is-active': this.fill == 'black'}]" @click="closeMenu(); fill = 'black'">Black
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="black" cx="45" cy="45" r="45"/></svg>
+    <button :class="['button', {'is-active': this.fill == '#000000'}]" @click="closeMenu(); fill = '#000000'">Black
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="icon icon-color"><circle fill="#000000" cx="45" cy="45" r="45"/></svg>
     </button>
     <button :class="['button']" @click="closeMenu(); fill = ''">None
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="icon icon-none"><path d="M 25 2 C 12.309534 2 2 12.309534 2 25 C 2 37.690466 12.309534 48 25 48 C 37.690466 48 48 37.690466 48 25 C 48 12.309534 37.690466 2 25 2 z M 25 4 C 36.609534 4 46 13.390466 46 25 C 46 36.609534 36.609534 46 25 46 C 13.390466 46 4 36.609534 4 25 C 4 13.390466 13.390466 4 25 4 z M 32.990234 15.986328 A 1.0001 1.0001 0 0 0 32.292969 16.292969 L 25 23.585938 L 17.707031 16.292969 A 1.0001 1.0001 0 0 0 16.990234 15.990234 A 1.0001 1.0001 0 0 0 16.292969 17.707031 L 23.585938 25 L 16.292969 32.292969 A 1.0001 1.0001 0 1 0 17.707031 33.707031 L 25 26.414062 L 32.292969 33.707031 A 1.0001 1.0001 0 1 0 33.707031 32.292969 L 26.414062 25 L 33.707031 17.707031 A 1.0001 1.0001 0 0 0 32.990234 15.986328 z"></path></svg>
@@ -178,7 +178,7 @@ export default {
     menuIsHidden: true,
     title: 'Untitled',
     canvas: null,
-    bg: '#fff',
+    bg: '#FFFFFF',
     isActivePencil: false,
     isActiveSelect: false,
     color: null,
@@ -252,12 +252,18 @@ export default {
       this.isActiveSelect = !this.isActiveSelect
     },
     getWidth() {
-      return this.width || 2
+      return this.width || 20
+    },
+    getFill() {
+      return this.fill || ''
+    },
+    getColour() {
+      return this.color || '#000000'
     },
     addRect() {
       const id = db.createNewElementKey()
       const el = new fabric.Rect({
-        id: id, fill: this.fill, stroke: this.color, strokeWidth: this.getWidth(), height: 40, width: 40, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
+        id: id, fill: this.getFill(), stroke: this.getColour(), strokeWidth: this.getWidth(), height: 400, width: 400, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
       })
       const data = { data: el.toJSON(['id']) }
 
@@ -267,7 +273,7 @@ export default {
     addCircle() {
       const id = db.createNewElementKey()
       const el = new fabric.Circle({
-        id: id, fill: this.fill, stroke: this.color, strokeWidth: this.getWidth(), radius: 20, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
+        id: id, fill: this.getFill(), stroke: this.getColour(), strokeWidth: this.getWidth(), radius: 200, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
       })
       const data = { data: el.toJSON(['id']) }
 
@@ -277,8 +283,8 @@ export default {
     addTriangle() {
       const id = db.createNewElementKey()
       const el = new fabric.Polygon(
-        [ {x: 0, y: 0}, {x: -40, y: 60}, {x: 40, y: 60} ],
-        { id: id, fill: this.fill, stroke: this.color, strokeWidth: this.getWidth(), height: 100, width: 100, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400) }
+        [ {x: 0, y: 0}, {x: -300, y: 400}, {x: 300, y: 400} ],
+        { id: id, fill: this.getFill(), stroke: this.getColour(), strokeWidth: this.getWidth(), height: 400, width: 400, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400) }
       )
       const data = { data: el.toJSON(['id']) }
 
@@ -289,7 +295,7 @@ export default {
       const id = db.createNewElementKey()
       // Use a rectangle because fabric.Line() has issues...
       const el = new fabric.Rect({
-        id: id, fill: this.color, typePatched: 'line', stroke: this.color, strokeWidth: this.getWidth(), height: 5, width: 200, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
+        id: id, fill: this.getColour(), typePatched: 'line', stroke: this.getColour(), strokeWidth: this.getWidth(), height: this.getWidth()/2, width: 800, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
       })
       const data = { data: el.toJSON(['id', 'typePatched']) }
 
@@ -298,9 +304,11 @@ export default {
     },
     addArrow() {
       const id = db.createNewElementKey()
+      const body_width = 400
+      const body_height = this.getWidth()*3
       const el = new fabric.Polygon(
-        [ {x:0, y:0}, {x:0, y:-10}, {x:80, y:-10}, {x:80, y:-20}, {x:100, y:-5}, {x:80, y:10}, {x:80, y:0} ],
-        { id: id, fill: this.fill, typePatched: 'line', stroke: this.color, strokeWidth: this.getWidth(), height: 100, width: 100, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400) }
+        [ {x:0, y:0}, {x:0, y:-body_height}, {x:body_width, y:-body_height}, {x:body_width, y:-body_height*2}, {x:body_width+body_height*2, y:-body_height/2}, {x:body_width, y:body_height}, {x:body_width, y:0} ],
+        { id: id, fill: this.fill||this.getColour(), typePatched: 'line', stroke: this.getColour(), strokeWidth: this.getWidth(), height: 100, width: 100, top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400) }
       )
       const data = { data: el.toJSON(['id', 'typePatched']) }
 
@@ -310,7 +318,7 @@ export default {
     addText() {
       const id = db.createNewElementKey()
       const el = new fabric.IText('Text', {
-        id: id, stroke: this.color, fill: this.color, fontSize: 32, fontFamily: this.fontFamily, textBackgroundColor: this.fill, top: 50, left: 50
+        id: id, stroke: this.getColour(), fill: this.getColour(), fontSize: 220, fontFamily: this.fontFamily, textBackgroundColor: this.getFill(), top: Math.floor(Math.random()*400), left: Math.floor(Math.random()*400)
       })
       el.fontWeight = this.fontBold ? 'bold' : 'normal'
       el.fontStyle = this.fontItalic ? 'italic' : 'normal'
@@ -326,8 +334,8 @@ export default {
       this.canvas.isDrawingMode = !this.canvas.isDrawingMode
 
       if (this.canvas.isDrawingMode) {
-        if (!this.color) this.color = 'black'
-        if (!this.width) this.width = 8
+        if (!this.color) this.color = '#000000'
+        if (!this.width) this.width = 20
         this.canvas.freeDrawingBrush.color = this.color
         this.canvas.freeDrawingBrush.width = this.getWidth()
       }
