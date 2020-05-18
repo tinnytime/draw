@@ -165,7 +165,7 @@ import firebase, { db } from "@/firebaseinit"
 import { fabric } from '@/fabric'
 import { routeHelpers } from '@/router'
 
-const canvas_horizontal_width = 2700
+const canvas_horizontal_width = 2200
 const canvas_horizontal_height = 1519
 const canvas_vertical_width = 769
 const canvas_vertical_height = canvas_vertical_width * canvas_horizontal_width / canvas_horizontal_height
