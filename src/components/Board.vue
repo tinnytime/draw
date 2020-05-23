@@ -141,7 +141,15 @@ export default {
       this.canvas.renderAll()
     },
     removeElements(elements) {
+      let orig = this.canvas.isDrawingMode
+      this.canvas.isDrawingMode = false
+      this.canvas.discardActiveObject()
+      this.canvas.renderAll()
+
       elements.forEach(el => this.canvas.remove(...this.getFabricElementsById(el.id)))
+
+      this.canvas.isDrawingMode = orig
+      this.canvas.renderAll()
     },
     toggleSelect(el = null) {
       if (el) {
