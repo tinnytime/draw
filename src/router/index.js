@@ -7,7 +7,7 @@ export const routeHelpers = {
   isValidRoutePath(path) {
     return path.match(/^[A-Z0-9-]{5,50}$/)
   },
-  redirectToNewBoard() {
+  createNewRoute() {
     let result = ''
     let characters = 'ABCEFGHJKMNPQRSTVWXYZ23456789-'
     let charactersLength = characters.length
@@ -15,14 +15,17 @@ export const routeHelpers = {
        result += characters.charAt(Math.floor(Math.random() * charactersLength))
     }
 
-    window.location.href = '/' + result
+    return result
+  },
+  redirectToNewBoard() {
+    window.location.href = '/' + createNewRoute()
   }
 }
 
 const routes = [
   {
     path: '/',
-    redirect: '/public-wall'
+    redirect: '/' + routeHelpers.createNewRoute()
   },
   {
     path: '/404',
