@@ -159,10 +159,16 @@ export default {
     getColour() {
       return this.color || '#000000'
     },
-    togglePencil(e) {
-      this.isActiveSelect = false
-      this.isActivePencil = !this.isActivePencil
-      this.canvas.isDrawingMode = !this.canvas.isDrawingMode
+    togglePencil(e, toggle = null) {
+      if (toggle === true) {
+        this.isActiveSelect = false
+        this.isActivePencil = true
+        this.canvas.isDrawingMode = true
+      } else {
+        this.isActiveSelect = false
+        this.isActivePencil = !this.isActivePencil
+        this.canvas.isDrawingMode = !this.canvas.isDrawingMode
+      }
 
       if (this.canvas.isDrawingMode) {
         if (!this.color) this.color = '#000000'
@@ -170,7 +176,11 @@ export default {
     },
     clearCanvas() {
       this.canvas.remove(...this.canvas.getObjects())
-      this.toggleSelect()
+      this.canvas.discardActiveObject()
+      this.canvas.renderAll()
+      this.canvas.isDrawingMode = false
+      this.canvas.renderAll() // This extra renderAll() is required after settings drawing mode
+      this.togglePencil(null, true)
     },
     deleteSelected() {
       this.canvas.remove(...this.canvas.getActiveObjects())
