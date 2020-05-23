@@ -11,7 +11,7 @@ export const routeHelpers = {
     let result = ''
     let characters = 'ABCEFGHJKMNPQRSTVWXYZ23456789-'
     let charactersLength = characters.length
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 30; i++) {
        result += characters.charAt(Math.floor(Math.random() * charactersLength))
     }
 
